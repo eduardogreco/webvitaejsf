@@ -1,0 +1,99 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:uri="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal">
+            <h:form id="form">  
+                <p:panel id="panel" header="Vendas realizadas"  closable="true" style="margin:10px;">
+                    <p:growl id="message" showDetail="true"/>  
+                    <p:dataTable var="vendas" value="#{listagemVendasBean.totalVendas}" paginator="true" rows="20" selection="#{listagemVendasBean.selectedVenda}" editable="true" rowKey="#{vendas.id}"  selectionMode="single" id="vendasTable"
+                                 emptyMessage="Nenhum resultado foi encontrado." filteredValue="#{listagemVendasBean.filteredTransacoes}" widgetVar="transacoesTable" >  
+                        <p:ajax event="rowSelect" update=":form" /> 
+                        <f:facet name="header" >
+                            <p:outputPanel style="margin-left: 60%;">
+                                <h:outputText value="Pesquisar: "/>
+                                <p:inputText id="globalFilter" onkeyup="transacoesTable.filter()"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="id">  
+                            <h:outputText value="#{vendas.id}" />  
+                        </p:column>  
+
+                        <p:column headerText="Tipo Pag.">  
+                            <h:outputText value="#{vendas.tpPagamento}" />  
+                        </p:column>  
+
+                        <p:column headerText="Data">  
+                            <h:outputText value="#{vendas.data}" />   
+                        </p:column> 
+
+                        <p:column headerText="Produto">  
+                            <h:outputText value="#{vendas.produto.nome}" />   
+                        </p:column> 
+
+                        <p:column headerText="Quantidade">  
+                            <h:outputText value="#{vendas.qtdeProduto}" />   
+                        </p:column> 
+
+                        <p:column headerText="Valor Uni.">  
+                            <h:outputText value="#{vendas.valorUnitarioFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Valor Total">  
+                            <h:outputText value="#{vendas.valorTotalFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Comprador">  
+                            <h:outputText value="#{vendas.comprador.nome}" />   
+                        </p:column>  
+
+                        <p:column headerText="Status">  
+                            <h:outputText value="#{vendas.status}"/>   
+                        </p:column>
+                        <p:column headerText="Frete">  
+                            <h:outputText value="#{vendas.frete}"/>   
+                        </p:column>
+<!--                        <p:column headerText="Validade">  
+                            <h:outputText value="{vendas.prazoValidade}"/>   
+                        </p:column>-->
+                        <p:column filterBy="#{vendas.id}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.comprador.nome}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.produto.nome}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.qtdeProduto}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.status}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.data}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.tpPagamento}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.valorTotal}" rendered="false"/>  
+                        <p:column filterBy="#{vendas.frete}" rendered="false"/>  
+                    </p:dataTable> 
+                     <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/excel.png" />  
+                        <p:dataExporter type="xls" target="vendasTable" fileName="vendas"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/pdf.png" />  
+                        <p:dataExporter type="pdf" target="vendasTable" fileName="vendas"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/csv.png" />  
+                        <p:dataExporter type="csv" target="vendasTable" fileName="vendas"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/xml.png" />  
+                        <p:dataExporter type="xml" target="vendasTable" fileName="vendas"/>  
+                    </h:commandLink>  
+                    <br /> <br />
+                    <h:outputLabel value="Valor total das vendas realizadas #{listagemVendasBean.valorTotalVendas}"  style="margin-left: 5px;margin-top: 20px;font-size: 15px;font-weight: bold;"/>  
+                </p:panel> 
+            </h:form> 
+        </div>
+    </c:if>
+</ui:composition>

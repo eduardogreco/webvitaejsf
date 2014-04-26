@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:b="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+    <h:form>
+        <div id="cabecalho">
+            <div>
+                
+                <h2 class="site_gestor"><b style="color:#0848b3 ">TSI</b><b style="color:#017c10 ">B</b><b style="color:#d00a0a ">a</b><b style="color:#e9f107 ">y</b> -  Administração do sistema</h2>
+            </div>
+        </div>
+        <div id="bar_navegacao">
+            <div class="user">
+                <p>#{loginBean.username} (<h:commandLink action="#{loginBean.doLogout()}" value="logout"/>)</p>
+               
+            </div>
+        </div>
+    </h:form>
+        </c:if>
+</ui:composition>

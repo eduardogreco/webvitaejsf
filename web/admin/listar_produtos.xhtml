@@ -1,0 +1,252 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:uri="http://primefaces.prime.com.tr/ui"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal">
+            <h:form id="form1">  
+                <p:panel id="lista_produtos" header="Listagem de Produtos"> 
+                    <p:growl id="message" showDetail="true"/>   
+                    <p:dataTable var="produto" value="#{listagemProdutosBean.listaProdutos}"  selection="#{listagemProdutosBean.produto}" rowKey="#{produto.id}" paginator="true" rows="20"  selectionMode="single" id="produtos1Table" style="text-align: center;"
+                                 emptyMessage="Nenhum resultado foi encontrado." filteredValue="#{listagemProdutosBean.filteredProdutos}" widgetVar="produtosTable" >  
+                        <p:ajax event="rowSelect" update=":form1"/> 
+                        <f:facet name="header" >
+                            <p:outputPanel style="margin-left: 60%;">
+                                <h:outputText value="Pesquisar: "/>
+                                <p:inputText id="globalFilter" onkeyup="produtosTable.filter()"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="id" width="15"
+                                  >  
+                            <h:outputText  value="#{produto.id}"/>  
+                        </p:column>  
+
+                        <p:column headerText="Nome" width="80">  
+                            <h:outputText value="#{produto.nome}" id="name"/>  
+                        </p:column>  
+                        <p:column headerText="Familia" width="80" >  
+                            <h:outputText value="#{produto.familia.nome}" id="familia"/>  
+                        </p:column>  
+
+                        <p:column headerText="Fabricante">  
+                            <h:outputText value="#{produto.fabricante}" id="fabricante"/>  
+                        </p:column> 
+
+                        <p:column headerText="Descrição" >  
+                            <h:outputText value="#{produto.fabricante}" id="descricao"/>  
+                        </p:column> 
+
+                        <p:column headerText="Data Cad.">  
+                            <h:outputText value="#{produto.data}" id="data"/>  
+                        </p:column> 
+
+                        <p:column headerText="Total" width="25">  
+                            <h:outputText value="#{produto.quantidade}" id="qtadeTotal"/>  
+                        </p:column> 
+
+                        <p:column headerText="Disp." width="40">  
+                            <h:outputText value="#{produto.qtdeDisponivel}" id="qtadeDisponivel"/>  
+                        </p:column> 
+
+                        <p:column headerText="Vendido" width="45">  
+                            <h:outputText value="#{produto.qtdeVendida}" id="qtdeVendida"/>  
+                        </p:column> 
+
+                        <p:column headerText="Frete">  
+                            <h:outputText value="#{produto.frete}" id="frete"/>  
+                        </p:column> 
+
+                        <p:column headerText="Preço" width="40">  
+                            <h:outputText value="#{produto.precoVenda}" id="preco"/>  
+                        </p:column> 
+                        <p:column headerText="Prazo" width="40">  
+                            <h:outputText value="#{produto.prazo}" id="prazo"/>  
+                        </p:column> 
+
+                        <p:column exportable="false" headerText="Opçoẽs" style="width:6%">  
+                            <p:commandButton id="viewButton" icon="ui-icon-pencil"  
+                                             onclick="prod.show();" type="button" /> 
+                            <p:commandButton id="viewButton2" icon="ui-icon-trash" oncomplete="produtoDelete.show()"/> 
+                        </p:column>  
+                        <p:column filterBy="#{produto.id}" rendered="false"/>  
+                        <p:column filterBy="#{produto.nome}" rendered="false"/>  
+                        <p:column filterBy="#{produto.descricao}" rendered="false"/>  
+                        <p:column filterBy="#{produto.familia.nome}" rendered="false"/>  
+                        <p:column filterBy="#{produto.frete}" rendered="false"/>  
+                        <p:column filterBy="#{produto.prazo}" rendered="false"/>  
+                        <p:column filterBy="#{produto.precoVenda}" rendered="false"/>  
+                        <p:column filterBy="#{produto.dtLimiteVenda}" rendered="false"/>  
+                        <p:column filterBy="#{produto.quantidade}" rendered="false"/>  
+                        <p:column filterBy="#{produto.qtdeDisponivel}" rendered="false"/>  
+                        <p:column filterBy="#{produto.fabricante}" rendered="false"/>  
+
+                    </p:dataTable> 
+                     <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/excel.png" />  
+                        <p:dataExporter type="xls" target="produtos1Table" fileName="produtos"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/pdf.png" />  
+                        <p:dataExporter type="pdf" target="produtos1Table" fileName="produtos"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/csv.png" />  
+                        <p:dataExporter type="csv" target="produtos1Table" fileName="produtos"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/xml.png" />  
+                        <p:dataExporter type="xml" target="produtos1Table" fileName="produtos"/>  
+                    </h:commandLink>  
+                    <br /> <br />
+                    <p:confirmDialog id="dialog" message="Deseja excluir este registro?"  
+                                     header="Deletar registro" severity="alert" widgetVar="produtoDelete"> 
+                        <p:commandButton value="Sim" style="margin-left: 25px;" actionListener="#{listagemProdutosBean.deleteProduto}" oncomplete="produtoDelete.hide(); #{listagemProdutosBean.listaProdutos}"/>
+                        <p:commandButton value="Não" onclick="produtoDelete.hide()" style="margin-left: 40px;"/>
+                    </p:confirmDialog>
+
+
+                    <p:dialog id="produtoDialog" dynamic="true" modal="true" width="52%" header="Alterar produto" widgetVar="prod">  
+                        <h:form id="produto" > 
+                             <p:growl id="growl" showDetail="true" life="3000" />
+                            <p:scrollPanel style="height:600px;">
+                                <h:panelGrid columns="2" cellpadding="3" style="margin-left: 12px;">
+                                    <p:commandButton id="submitButton" value="Atualizar" icon="ui-icon-arrowrefresh-1-s" update="growl" ajax="true" actionListener="#{listagemProdutosBean.editProduto}" oncomplete="prod.hide();#{listagemProdutosBean.listaProdutos}"/>  
+                                </h:panelGrid>
+                                <p:fieldset legend="Dados do Produto">  
+
+                                    <h:panelGrid columns="4" cellpadding="3">  
+
+                                        <h:outputLabel for="id" value="Id:" />  
+                                        <p:inputText id="id" value="#{listagemProdutosBean.produto.id}"  readonly="true" size="15" style="margin-left: 55px"/>  
+
+                                        <h:outputLabel for="data" value="Data cadastro:" style="margin-left: 13px" />  
+                                        <p:calendar value="#{listagemProdutosBean.produto.data}" id="popupCal" readonly="true" size="15" disabled="true"/>
+
+                                    </h:panelGrid>  
+                                    <h:panelGrid columns="3" cellpadding="3">  
+
+                                        <h:outputLabel for="nome" value="Nome*:" />  
+                                        <p:inputText id="nome" value="#{listagemProdutosBean.produto.nome}" required="true" requiredMessage="É obrigatório informar o nome!" size="47"/> 
+                                        <p:message for="nome" /> 
+
+                                        <h:outputLabel for="fabricante" value="Fabricante*:" />  
+                                        <p:inputText id="fabricante" value="#{listagemProdutosBean.produto.fabricante}" required="true" requiredMessage="É obrigatório informar o fabricante!" size="47"/> 
+                                        <p:message for="fabricante" /> 
+
+                                        <h:outputLabel for="descricao" value="Descrição*:"/>  
+                                        <p:inputTextarea id="descricao" value="#{listagemProdutosBean.produto.descricao}" maxlength="150" rows="5" cols="45" autoResize="false"  required="true" requiredMessage="É obrigatório informar a descrição!" /> 
+                                        <p:message for="descricao" /> 
+
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="3" cellpadding="3">  
+                                        <h:outputLabel for="familia" value="Familia*:"/>  
+                                        <p:autoComplete value="#{listagemProdutosBean.produto.familia}" id="familia" completeMethod="#{familiaBean.completaFamilia}" 
+                                                        converter="familiaConverter" var="f" itemLabel="#{f.nome}" itemValue="#{f}" forceSelection="true"  style="margin-left: 19px;">  
+                                        </p:autoComplete>  
+                                        <p:commandButton id="basic"  onclick="fam.show();" type="button"  icon="ui-icon-search" />  
+                                        <p:message for="familia" /> 
+                                        <p:dialog id="basicDialog" header="Familias cadastradas" widgetVar="fam" resizable="false" appendToBody="true" >  
+                                            <p:dataTable  id="listaFamilias" var="familia" value="#{familiaBean.familias}" resizableColumns="false" >  
+                                                <p:column headerText="Id">  
+                                                    <h:outputText value="#{familia.id}" />  
+                                                </p:column>  
+                                                <p:column headerText="Nome">  
+                                                    <h:outputText value="#{familia.nome}" />  
+                                                </p:column>  
+                                            </p:dataTable>
+                                        </p:dialog>
+                                    </h:panelGrid>   
+                                </p:fieldset>
+
+                                <p:fieldset legend="Dados Comerciais" style="margin-top: 5px">  
+
+                                    <h:panelGrid columns="6" cellpadding="3">  
+
+                                        <h:outputLabel for="precoVenda" value="Preço Venda*:" />  
+                                        <p:inputText id="precoVenda"  value="#{listagemProdutosBean.produto.precoVenda}" required="true" requiredMessage="É obrigatório informar o preço de venda!" size="15">
+                                            <f:convertNumber pattern="#,###.##"></f:convertNumber>  
+                                            <p:ajax update="precoVenda" process="precoVenda" event="change" />  
+                                            <f:validator validatorId="MoedaValidator"  />  
+                                        </p:inputText>
+                                        <p:message for="precoVenda" /> 
+
+                                        <h:outputLabel for="qtdeDisponivel" value="Quantidade Disponível:" />  
+                                        <p:inputMask id="qtdeDisponivel" mask="9?999999999999999" value="#{listagemProdutosBean.produto.qtdeDisponivel}" readonly="true" size="15"/> 
+                                        <p:message for="qtdeDisponivel" /> 
+
+                                        <h:outputLabel for="quantidade" value="Quantidade*:" />  
+                                        <p:inputMask id="quantidade" mask="9?999999999" value="#{listagemProdutosBean.produto.quantidade}" requiredMessage="É obrigatório informar a quantidade!" required="true" size="15"/> 
+                                        <p:message for="quantidade" /> 
+
+                                        <h:outputLabel for="qtdeVendida" value="Quantidade Vendida:" />  
+                                        <p:inputMask id="qtdeVendida" mask="9?999999999" value="#{listagemProdutosBean.produto.qtdeVendida}" readonly="true" size="15"/> 
+                                        <p:message for="qtdeVendida" /> 
+
+                                        <h:outputLabel for="prazo" value="Prazo Pagamento (dias)*:" />  
+                                        <p:inputMask id="prazo" mask="9?99" required="true" value="#{listagemProdutosBean.produto.prazo}" requiredMessage="É obrigatório informar o prazo!" size="15"/> 
+                                        <p:message for="prazo" /> 
+
+
+                                        <h:outputLabel for="dataLimite" value="Data Limite Venda*:" />  
+                                        <p:calendar  value="#{listagemProdutosBean.produto.dtLimiteVenda}" id="dataLimite" required="true" requiredMessage="É obrigatório informar a data limite!" size="15"/>
+                                        <p:message for="dataLimite" /> 
+
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="3" cellpadding="3">  
+
+                                        <h:outputLabel for="frete" value="Frete*:" />  
+                                        <p:selectOneMenu id="frete"  value="#{listagemProdutosBean.produto.frete}" required="true" requiredMessage="É obrigatório informar o frete!" style="margin-left: 96px">  
+                                            <f:selectItem itemLabel="À Combinar" itemValue="À Combinar" />  
+                                            <f:selectItem itemLabel="Grátis" itemValue="Grátis" /> 
+                                            <f:selectItem itemLabel="Por conta do comprador" itemValue="Por conta do comprador" />  
+                                        </p:selectOneMenu>
+                                        <p:message for="frete" /> 
+
+                                        <h:outputLabel for="oferta" value="Ofertado:" />  
+                                        <p:selectBooleanButton value="#{listagemProdutosBean.produto.ofertado}"  onLabel="Sim" offLabel="Não" style="margin-left: 96px"/> 
+
+                                    </h:panelGrid>
+                                </p:fieldset>
+                                <p:fieldset legend="Imagens do Produto*" style="margin-top: 5px;" >
+                                    <c:if test="#{listagemProdutosBean.verificaQuantidade()}">
+                                        <p:fileUpload  id="upload" fileUploadListener="#{listagemProdutosBean.uploadAction}" invalidFileMessage="Arquivo inválido. São permitidos somente arquivos .png, .jpeg, .gif e .jpg." mode="advanced" dragDropSupport="false" auto="true"
+                                                       allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/" update="listaImagens" />  
+                                    </c:if>
+                                    <p:dataTable id="listaImagens" var="imagem" value="#{listagemProdutosBean.imagens}" selection="#{listagemProdutosBean.selectedImagem}" editable="true" rowKey="#{imagem.imagem}"  selectionMode="single"  style="margin-top: 15px;width: 600px;" >  
+                                        <p:ajax event="rowSelect" />
+                                        <p:column headerText="Nome" width="15%">  
+                                            <h:outputText value="#{imagem.imagem}" />  
+                                        </p:column>  
+                                        <p:column headerText="Imagem">  
+                                            <h:graphicImage value="resources/produtos/#{listagemProdutosBean.id}/#{imagem.imagem}" width="70px" height="70px"/>
+                                        </p:column>  
+                                        <p:column headerText="Principal" width="5%">  
+                                            <p:selectBooleanButton  value="#{imagem.principal}"  onLabel="Sim" offLabel="Não" />  
+                                        </p:column>  
+                                        <p:column headerText="Excluir" style="width:4%;text-align: center;"> 
+                                            <p:commandButton id="delImagem" icon="ui-icon-trash" oncomplete="imagemDelete.show()"/> 
+                                        </p:column> 
+                                    </p:dataTable>
+                                    <p:confirmDialog id="dialog" message="Deseja excluir esta imagem?"  
+                                                     header="Deletar imagem" severity="alert" widgetVar="imagemDelete"> 
+                                        <p:commandButton value="Sim" style="margin-left: 25px;" update="listaImagens"  action="#{listagemProdutosBean.imagemDelete}" oncomplete="imagemDelete.hide(); #{listagemProdutosBean.imagens}"/>
+                                        <p:commandButton value="Não" onclick="imagemDelete.hide()" style="margin-left: 40px;"/>
+                                    </p:confirmDialog>
+
+                                </p:fieldset>
+                            </p:scrollPanel>
+                        </h:form>
+                    </p:dialog>
+                </p:panel>
+            </h:form> 
+        </div>
+    </c:if>
+</ui:composition>
+

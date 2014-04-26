@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core">
+    <c:if test="#{loginBean.loggedIn}">
+    <c:if test="#{loginBean.tipoPessoa == 'admin'}">
+            <div id="principal">
+                <h:form id="form">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <p:panel id="panel" header="Porcentagem das Comissões"  closable="true" style="margin:10px;"> 
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="porcentagemAtual" value="Porcentagem atual da comissão é de  #{comissaoBean.porcentagemAtual}%." style="font-size: 15px;font-weight: bold;" />  
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="data" value="Data cadastro:"/>  
+                            <p:calendar value="#{comissaoBean.comissao.data}" id="popupCal" readonly="true" size="15" disabled="true" />
+
+                            <h:outputLabel for="porcentagem" value="Porcentagem da comissão(%)*:" />  
+                            <p:inputMask id="porcentagem" mask="9?9" value="#{comissaoBean.comissao.porcentagem}" maxlength="50" required="true" size="15"/> 
+                            <p:message for="porcentagem" /> 
+
+                        </h:panelGrid>
+                        <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
+                            <p:commandButton value="Cadastrar" update="form:growl"  action="#{comissaoBean.addComissao()}" ajax="false"  style="margin-left: 100px" />
+                        </h:panelGrid>
+
+                    </p:panel>
+                </h:form>
+            </div>
+        </c:if>
+    </c:if>
+</ui:composition>

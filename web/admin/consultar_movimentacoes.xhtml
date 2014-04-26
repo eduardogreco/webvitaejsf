@@ -1,0 +1,106 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:uri="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn || loginBean.usuario.tipo == 'admin'}">
+
+        <div id="principal">
+            <h:form id="form">  
+                <p:panel id="panel" header="Movimentações do sistema"  closable="true" style="margin:10px;">
+                    <p:growl id="message" showDetail="true"/>  
+                    <p:dataTable var="transacoes" value="#{listagemMovimentacoesBean.transacoes}" selection="#{listagemMovimentacoesBean.selectedTransacao}" editable="true" rowKey="#{transacoes.id}"  paginator="true" rows="25"  selectionMode="single" id="movimentacoesTable"
+                                 emptyMessage="Nenhum resultado foi encontrado." filteredValue="#{listagemMovimentacoesBean.filteredTransacoes}" widgetVar="transacoesTable" >  
+                        <p:ajax event="rowSelect" update=":form" /> 
+                        <f:facet name="header" >
+                            <p:outputPanel style="margin-left: 60%;">
+                                <h:outputText value="Pesquisar: "/>
+                                <p:inputText id="globalFilter" onkeyup="transacoesTable.filter()"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="id">  
+                            <h:outputText value="#{transacoes.id}" />  
+                        </p:column>  
+
+                        <p:column headerText="Tipo Pag.">  
+                            <h:outputText value="#{transacoes.tpPagamento}" />  
+                        </p:column>  
+
+                        <p:column headerText="Data">  
+                            <h:outputText value="#{transacoes.data}" />   
+                        </p:column> 
+
+                        <p:column headerText="Produto">  
+                            <h:outputText value="#{transacoes.produto.nome}" />   
+                        </p:column> 
+
+                        <p:column headerText="Qtde" width="15">  
+                            <h:outputText value="#{transacoes.qtdeProduto}" />   
+                        </p:column> 
+
+                        <p:column headerText="Valor Uni.">  
+                            <h:outputText value="#{transacoes.valorUnitarioFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Total">  
+                            <h:outputText value="#{transacoes.valorTotalFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Comprador">  
+                            <h:outputText value="#{transacoes.comprador.nome}" />   
+                        </p:column>  
+                        <p:column headerText="Vendedor">  
+                            <h:outputText value="#{transacoes.vendedor.nome}" />   
+                        </p:column>  
+
+                        <p:column headerText="Status">  
+                            <h:outputText value="#{transacoes.status}"/>   
+                        </p:column>
+                        <p:column headerText="Tipo Pag.">  
+                            <h:outputText value="#{transacoes.tpPagamento}"/>   
+                        </p:column>
+<!--                        <p:column headerText="Validade">  
+                            <h:outputText value="{transacoes.prazoValidade}"/>   
+                        </p:column>-->
+                        <p:column filterBy="#{transacoes.id}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.comprador.nome}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.vendedor.nome}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.produto.nome}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.qtdeProduto}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.status}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.data}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.tpPagamento}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.valorTotal}" rendered="false"/>  
+                        <p:column filterBy="#{transacoes.frete}" rendered="false"/>  
+
+                    </p:dataTable> 
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/excel.png" />  
+                        <p:dataExporter type="xls" target="transacoesTable" fileName="movimentações"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/pdf.png" />  
+                        <p:dataExporter type="pdf" target="transacoesTable" fileName="movimentações"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/csv.png" />  
+                        <p:dataExporter type="csv" target="transacoesTable" fileName="movimentações"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/xml.png" />  
+                        <p:dataExporter type="xml" target="transacoesTable" fileName="movimentações"/>  
+                    </h:commandLink>  
+                    <br /> <br />
+                    <h:outputLabel value="Valor total das transacoes realizadas #{listagemMovimentacoesBean.valorTotal}" style="margin-left: 5px;margin-top: 20px;font-size: 15px;font-weight: bold;"></h:outputLabel>  
+                </p:panel> 
+            </h:form> 
+        </div>
+    </c:if>
+</ui:composition>
+

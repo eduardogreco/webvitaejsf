@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <title>Login</title>
+        <link href="../resources/css/LayoutLogin.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <!--        <h3>Login  -  <b style="color:#0848b3 ">TSI</b><b style="color:#017c10 ">B</b><b style="color:#d00a0a ">a</b><b style="color:#e9f107 ">y</b></h3>-->
+        <div id="login">
+            <h:form id="form-login">
+                <!--<h:outputText value="Usuário:"/>-->
+                <h:inputText class="usuario" value="#{loginBean.username}" id="username"/>
+             
+                <!--<h:outputText value="Senha:"/>-->
+                <h:inputSecret class="senha" value="#{loginBean.password}" id="password"/>
+                <br/>
+                <h:commandButton class="entrar" id="button" action="#{loginBean.doLogin}"/>
+        
+                <h:commandLink class="cadastro" action="#{navigationBean.redirectCadastro}" value="Cadastre-se" onclick="atualizaDivContentPessoa()"/>
+                <br/>
+                <div class="imagem-erro"></div>
+                <h:messages class="erro" />
+                <br/>
+            </h:form>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,100 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:uri="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal">
+            <h:form id="form">  
+                <p:panel id="panel" header="Compras realizadas"  closable="true" style="margin:10px;">
+                    <p:growl id="message" showDetail="true"/>  
+                    <p:dataTable var="compras" value="#{listagemComprasBean.totalCompras}" selection="#{listagemComprasBean.selectedCompra}" paginator="true" rows="20" editable="true" rowKey="#{compras.id}"  selectionMode="single" id="comprasTable"
+                                 emptyMessage="Nenhum resultado foi encontrado." filteredValue="#{listagemComprasBean.filteredTransacoes}" widgetVar="transacoesTable" >  
+                        <p:ajax event="rowSelect" update=":form" /> 
+
+                        <f:facet name="header" >
+                            <p:outputPanel style="margin-left: 60%;">
+                                <h:outputText value="Pesquisar: "/>
+                                <p:inputText id="globalFilter" onkeyup="transacoesTable.filter()"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="id">  
+                            <h:outputText value="#{compras.id}" />  
+                        </p:column>  
+
+                        <p:column headerText="Tipo Pag.">  
+                            <h:outputText value="#{compras.tpPagamento}" />  
+                        </p:column>  
+
+                        <p:column headerText="Data">  
+                            <h:outputText value="#{compras.data}" />   
+                        </p:column> 
+
+                        <p:column headerText="Produto">  
+                            <h:outputText value="#{compras.produto.nome}" />   
+                        </p:column> 
+
+                        <p:column headerText="Quantidade">  
+                            <h:outputText value="#{compras.qtdeProduto}" />   
+                        </p:column> 
+
+                        <p:column headerText="Valor Uni.">  
+                            <h:outputText value="#{compras.valorUnitarioFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Valor Total">  
+                            <h:outputText value="#{compras.valorTotalFormatado}" />   
+                        </p:column> 
+
+                        <p:column headerText="Comprador">  
+                            <h:outputText value="#{compras.vendedor.nome}" />   
+                        </p:column>  
+
+                        <p:column headerText="Status">  
+                            <h:outputText value="#{compras.status}"/>   
+                        </p:column>
+                        <p:column headerText="Frete">  
+                            <h:outputText value="#{compras.frete}"/>   
+                        </p:column>
+<!--                        <p:column headerText="Validade">  
+                            <h:outputText value="{compras.prazoValidade}"/>   
+                        </p:column>-->
+                        <p:column filterBy="#{compras.id}" rendered="false"/>  
+                        <p:column filterBy="#{compras.vendedor.nome}" rendered="false"/>  
+                        <p:column filterBy="#{compras.produto.nome}" rendered="false"/>  
+                        <p:column filterBy="#{compras.qtdeProduto}" rendered="false"/>  
+                        <p:column filterBy="#{compras.status}" rendered="false"/>  
+                        <p:column filterBy="#{compras.data}" rendered="false"/>  
+                        <p:column filterBy="#{compras.tpPagamento}" rendered="false"/>  
+                        <p:column filterBy="#{compras.valorTotal}" rendered="false"/>  
+                        <p:column filterBy="#{compras.frete}" rendered="false"/>  
+                    </p:dataTable> 
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/excel.png" />  
+                        <p:dataExporter type="xls" target="comprasTable" fileName="compras"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/pdf.png" />  
+                        <p:dataExporter type="pdf" target="comprasTable" fileName="compras"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/csv.png" />  
+                        <p:dataExporter type="csv" target="comprasTable" fileName="compras"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink>  
+                        <p:graphicImage value="resources/imagesAdmin/xml.png" />  
+                        <p:dataExporter type="xml" target="comprasTable" fileName="compras"/>  
+                    </h:commandLink>  
+                    <br /> <br />
+                    <h:outputLabel value="Valor total das compras realizadas #{listagemComprasBean.valorTotalCompras}" style="margin-left: 5px;margin-top: 20px;font-size: 15px;font-weight: bold;"></h:outputLabel>  
+                </p:panel> 
+            </h:form> 
+        </div>
+    </c:if>
+</ui:composition>

@@ -1,0 +1,142 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal"> 
+            <h:form id="produto">  
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+                <p:panel id="panel_produto" header="Cadastro do Produto" closable="true"> 
+
+                    <p:fieldset legend="Dados do Produto">  
+
+                        <h:panelGrid columns="4" cellpadding="3">  
+
+                            <h:outputLabel for="id" value="Id:" />  
+                            <p:inputText id="id" value="#{produtoBean.produto.id}"  readonly="true" size="15" style="margin-left: 55px"/>  
+
+                            <h:outputLabel for="data" value="Data cadastro:" style="margin-left: 13px" />  
+                            <p:calendar value="#{produtoBean.produto.data}" id="popupCal" readonly="true" size="15" disabled="true"/>
+
+                        </h:panelGrid>  
+                        <h:panelGrid columns="3" cellpadding="3">  
+
+                            <h:outputLabel for="nome" value="Nome*:" />  
+                            <p:inputText id="nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="É obrigatório informar o nome!" size="47"/> 
+                            <p:message for="nome" /> 
+
+                            <h:outputLabel for="fabricante" value="Fabricante*:" />  
+                            <p:inputText id="fabricante" value="#{produtoBean.produto.fabricante}" required="true" requiredMessage="É obrigatório informar o fabricante!" size="47"/> 
+                            <p:message for="fabricante" /> 
+
+                            <h:outputLabel for="descricao" value="Descrição*:"/>  
+                            <p:inputTextarea id="descricao" value="#{produtoBean.produto.descricao}" maxlength="150" rows="5" cols="45" autoResize="false"  required="true" requiredMessage="É obrigatório informar a descrição!" /> 
+                            <p:message for="descricao" /> 
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="3" cellpadding="3">  
+                            <h:outputLabel for="familia" value="Familia*:"/>  
+                            <p:autoComplete value="#{produtoBean.produto.familia}" id="familia" completeMethod="#{familiaBean.completaFamilia}" 
+                                            converter="familiaConverter" var="f" itemLabel="#{f.nome}" itemValue="#{f}" forceSelection="true"  style="margin-left: 19px;">  
+                            </p:autoComplete>  
+                            <p:commandButton id="basic"  onclick="fam.show();" type="button"  icon="ui-icon-search" />  
+                            <p:message for="familia" /> 
+                            <p:dialog id="basicDialog" header="Familias cadastradas" widgetVar="fam" resizable="false" appendToBody="true" >  
+                                <p:dataTable  id="listaFamilias" var="familia" value="#{familiaBean.familias}" resizableColumns="false" >  
+                                    <p:column headerText="Id">  
+                                        <h:outputText value="#{familia.id}" />  
+                                    </p:column>  
+                                    <p:column headerText="Nome">  
+                                        <h:outputText value="#{familia.nome}" />  
+                                    </p:column>  
+                                </p:dataTable>
+                            </p:dialog>
+                        </h:panelGrid>   
+                    </p:fieldset>
+
+                    <p:fieldset legend="Dados Comerciais" style="margin-top: 5px">  
+
+                        <h:panelGrid columns="6" cellpadding="3">  
+
+                            <h:outputLabel for="precoVenda" value="Preço Venda*:" />  
+                            <p:inputText id="precoVenda"  value="#{produtoBean.produto.precoVenda}" required="true" requiredMessage="É obrigatório informar o preço de venda!" size="15">
+                                <f:convertNumber pattern="#,###.##"></f:convertNumber>  
+                                <p:ajax update="precoVenda" process="precoVenda" event="change" />  
+                                <f:validator validatorId="MoedaValidator"  />  
+                            </p:inputText>
+                            <p:message for="precoVenda" /> 
+
+                            <h:outputLabel for="qtdeDisponivel" value="Quantidade Disponível:" />  
+                            <p:inputMask id="qtdeDisponivel" mask="9?999999999999999" value="#{produtoBean.produto.qtdeDisponivel}" readonly="true" size="15"/> 
+                            <p:message for="qtdeDisponivel" /> 
+
+                            <h:outputLabel for="quantidade" value="Quantidade*:" />  
+                            <p:inputMask id="quantidade" mask="9?999999999" value="#{produtoBean.produto.quantidade}" requiredMessage="É obrigatório informar a quantidade!" required="true" size="15"/> 
+                            <p:message for="quantidade" /> 
+
+                            <h:outputLabel for="qtdeVendida" value="Quantidade Vendida:" />  
+                            <p:inputMask id="qtdeVendida" mask="9?999999999" value="#{produtoBean.produto.qtdeVendida}" readonly="true" size="15"/> 
+                            <p:message for="qtdeVendida" /> 
+
+                            <h:outputLabel for="prazo" value="Prazo Pagamento (dias)*:" />  
+                            <p:inputMask id="prazo" mask="9?99" required="true" value="#{produtoBean.produto.prazo}" requiredMessage="É obrigatório informar o prazo!" size="15"/> 
+                            <p:message for="prazo" /> 
+
+
+                            <h:outputLabel for="dataLimite" value="Data Limite Venda*:" />  
+                            <p:calendar  value="#{produtoBean.produto.dtLimiteVenda}" id="dataLimite" required="true" requiredMessage="É obrigatório informar a data limite!" size="15"/>
+                            <p:message for="dataLimite" /> 
+
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="3" cellpadding="3">  
+
+                            <h:outputLabel for="frete" value="Frete*:" />  
+                            <p:selectOneMenu id="frete"  value="#{produtoBean.produto.frete}" requiredMessage="É obrigatório informar o frete!" style="margin-left: 96px">  
+                                <f:selectItem itemLabel="À Combinar" itemValue="0" />  
+                                <f:selectItem itemLabel="Grátis" itemValue="1" /> 
+                                <f:selectItem itemLabel="Por conta do comprador" itemValue="2" />  
+                            </p:selectOneMenu>
+                            <p:message for="frete" /> 
+
+                            <h:outputLabel for="oferta" value="Ofertado:" />  
+                            <p:selectBooleanButton value="#{produtoBean.produto.ofertado}"  onLabel="Sim" offLabel="Não" style="margin-left: 96px"/> 
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="Imagens do Produto*" style="margin-top: 5px;" >
+                        <c:if test="#{produtoBean.verificaQuantidade()}">
+                            <p:fileUpload  id="upload" fileUploadListener="#{produtoBean.uploadAction}" invalidFileMessage="Arquivo inválido. São permitidos somente arquivos .png, .jpeg, .gif e .jpg." mode="advanced" dragDropSupport="false" auto="true"
+                                           allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/" update="listaImagens" />  
+                        </c:if>
+                        <p:dataTable id="listaImagens" var="imagem" value="#{produtoBean.imagens}" selection="#{produtoBean.selectedImagem}" editable="true" rowKey="#{imagem.imagem}"  selectionMode="single"  style="margin-top: 15px;width: 600px;" >  
+                            <p:ajax event="rowSelect" />
+                            <p:column headerText="Nome" width="15%">  
+                                <h:outputText value="#{imagem.imagem}" />  
+                            </p:column>  
+                            <p:column headerText="Imagem">  
+                                <h:graphicImage value="resources/produtos/#{produtoBean.id}/#{imagem.imagem}" width="70px" height="70px"/>
+                            </p:column>  
+                            <p:column headerText="Principal" width="5%">  
+                                <p:selectBooleanButton  value="#{imagem.principal}"  onLabel="Sim" offLabel="Não" />  
+                            </p:column>  
+                            <p:column headerText="Excluir" style="width:4%;text-align: center;"> 
+                                <p:commandButton id="delImagem" icon="ui-icon-trash" oncomplete="imagemDelete.show()"/> 
+                            </p:column> 
+                        </p:dataTable>
+                        <p:confirmDialog id="dialog" message="Deseja excluir esta imagem?"  
+                                         header="Deletar imagem" severity="alert" widgetVar="imagemDelete"> 
+                            <p:commandButton value="Sim" style="margin-left: 25px;" update="listaImagens"  action="#{produtoBean.imagemDelete}" oncomplete="imagemDelete.hide(); #{produtoBean.imagens}"/>
+                            <p:commandButton value="Não" onclick="imagemDelete.hide()" style="margin-left: 40px;"/>
+                        </p:confirmDialog>
+                    </p:fieldset>
+                    <h:panelGrid columns="2" cellpadding="3">
+                        <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{produtoBean.addProduto}" update="form:growl" ajax="false"/>
+                    </h:panelGrid> 
+                </p:panel> 
+            </h:form>
+        </div>
+    </c:if>
+</ui:composition>
