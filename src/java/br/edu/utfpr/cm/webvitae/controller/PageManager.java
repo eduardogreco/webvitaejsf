@@ -24,6 +24,10 @@ public class PageManager implements Serializable {
         this.paginaAtiva = "./admin/produtos.xhtml";
     }
     
+     public void setPagCadastro() {
+        this.paginaAtiva = "./admin/cadastro.xhtml";
+    }
+    
     public void setPagComissoes() {
         this.paginaAtiva = "./admin/comissoes.xhtml";
     }

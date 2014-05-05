@@ -36,7 +36,7 @@
                             <p:message for="descricao" /> 
 
                         </h:panelGrid>
-                        <h:panelGrid columns="3" cellpadding="3">  
+                       <h:panelGrid columns="3" cellpadding="3">  
                             <h:outputLabel for="familia" value="Familia*:"/>  
                             <p:autoComplete value="#{produtoBean.produto.familia}" id="familia" completeMethod="#{familiaBean.completaFamilia}" 
                                             converter="familiaConverter" var="f" itemLabel="#{f.nome}" itemValue="#{f}" forceSelection="true"  style="margin-left: 19px;">  
@@ -53,7 +53,7 @@
                                     </p:column>  
                                 </p:dataTable>
                             </p:dialog>
-                        </h:panelGrid>   
+                        </h:panelGrid> 
                     </p:fieldset>
 
                     <p:fieldset legend="Dados Comerciais" style="margin-top: 5px">  
@@ -61,7 +61,7 @@
                         <h:panelGrid columns="6" cellpadding="3">  
 
                             <h:outputLabel for="precoVenda" value="Preço Venda*:" />  
-                            <p:inputText id="precoVenda"  value="#{produtoBean.produto.precoVenda}" required="true" requiredMessage="É obrigatório informar o preço de venda!" size="15">
+                           <p:inputText id="precoVenda"  value="#{produtoBean.produto.precoVenda}" required="true" requiredMessage="É obrigatório informar o preço de venda!" size="15">
                                 <f:convertNumber pattern="#,###.##"></f:convertNumber>  
                                 <p:ajax update="precoVenda" process="precoVenda" event="change" />  
                                 <f:validator validatorId="MoedaValidator"  />  
