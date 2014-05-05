@@ -13,11 +13,11 @@
                     <h:panelGrid columns="3" cellpadding="5">
 
                         <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{loginBean.usuario.id}" readonly="true" label="id" size="10"/>  
+                        <p:inputText id="id" value="#{end.id}" readonly="true" label="id" size="10"/>  
                         <p:message for="id" /> 
 
-                        <h:outputLabel for="nome" value="Nome:*" />
-                        <p:inputText id="nome" value="#{loginBean.usuario.nome}" required="true" label="nome" size="50"/>  
+                        <h:outputLabel for="nome" value="Bairro:*" />
+                        <p:inputText id="nome" value="#{end.bairro}" required="true" label="nome" size="50"/>  
                         <p:message for="nome" /> 
 
                         <h:outputLabel for="email" value="Email:*" />

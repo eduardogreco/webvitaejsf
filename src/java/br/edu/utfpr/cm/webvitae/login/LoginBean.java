@@ -1,4 +1,4 @@
-package br.edu.utfpr.cm.webvitae.Controle.Login;
+package br.edu.utfpr.cm.webvitae.login;
 
 import br.edu.utfpr.cm.webvitae.daos.DaoPessoa;
 import br.edu.utfpr.cm.webvitae.model.Pessoa;
