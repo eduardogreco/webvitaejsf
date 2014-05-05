@@ -7,43 +7,37 @@
         <div id="menu" class="column">
 
             <h:form>
-                <h3>Gerenciamento de Produtos</h3>
+                <h3>Dados pessoais</h3>
                 <ul class="toggle">
                     <li class="icn_new_article">
-                        <h:commandLink value="Adicionar produtos" action="#{pageManager.setPagProdutos()}" />
+                        <h:commandLink value="Pessoal" action="#{pageManager.setPagProdutos()}" />
                     </li>
-                    <li class="icn_categories">
-                        <h:commandLink value="Listar produtos" action="#{pageManager.setPagListarProdutos()}" />
+                    <li class="icn_new_article">
+                        <h:commandLink value="Telefone" action="#{pageManager.setPagProdutos()}" />
+                    </li>
+                    <li class="icn_new_article">
+                        <h:commandLink value="E-mail" action="#{pageManager.setPagProdutos()}" />
                     </li>
                 </ul>
-                <h3>Transações</h3>
+                <h3>Currículo</h3>
                 <ul class="toggle">
-                    <li class="icn_categories">
-                        <h:commandLink value="Vendas em andamento" action="#{pageManager.setPagVendas()}" />
+                    <li class="icn_new_article">
+                        <h:commandLink value="Experiência" action="#{pageManager.setPagProdutos()}" />
                     </li>
-                    <li class="icn_categories">
-                        <h:commandLink value="Compras em andamento" action="#{pageManager.setPagCompras()}" />
+                    <li class="icn_new_article">
+                        <h:commandLink value="Formação" action="#{pageManager.setPagProdutos()}" />
                     </li>
-                    <li class="icn_categories">
-                        <h:commandLink value="Listar compras" action="#{pageManager.setPagListarCompras()}" />
-                    </li>
-                    <li class="icn_categories">
-                        <h:commandLink value="Listar vendas" action="#{pageManager.setPagListarVendas()}" />
-                    </li>
-                    <li class="icn_view_users">
-                        <h:commandLink value="Listar vendedores" action="#{pageManager.setPagListarVendedores()}" />
+                    <li class="icn_new_article">
+                        <h:commandLink value="Objetivos" action="#{pageManager.setPagProdutos()}" />
                     </li>
                     <!--                    <li class="icn_new_article">
                                             <h:commandLink value="Comissões" action="{pageManager.setPagComissoes()}" />
                                         </li>-->
                 </ul>
-                <h3>Configurações</h3>
+                <h3>Vagas disponíveis</h3>
                 <ul class="toggle">
-                    <li class="icn_edit_article">
-                        <h:commandLink value="Editar perfil" action="#{pageManager.setPagPerfil()}" />
-                    </li>
-                    <li class="icn_edit_article">
-                        <h:commandLink value="Alterar senha" action="#{pageManager.setPagSenha()}" />
+                    <li class="icn_categories">
+                        <h:commandLink value="Listar vagas" action="#{pageManager.setPagListarVendas()}" />
                     </li>
                 </ul>
                 <c:if test="#{loginBean.tipoPessoa == 'admin'}">
