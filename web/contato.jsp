@@ -1,8 +1,4 @@
-<%-- 
-    Document   : pessoa
-    Created on : 23/09/2013, 19:06:10
-    Author     : alauber
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

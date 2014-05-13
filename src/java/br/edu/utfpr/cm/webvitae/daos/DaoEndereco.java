@@ -8,7 +8,7 @@ import br.edu.utfpr.cm.webvitae.model.Endereco;
 
 /**
  *
- * @author Alex
+ * @author eduardo
  */
 public class DaoEndereco extends DaoGenerics<Endereco> {
 

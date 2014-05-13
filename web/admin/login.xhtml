@@ -14,13 +14,13 @@
             <h:form id="form-login">
                 <!--<h:outputText value="Usuário:"/>-->
                 <h:inputText class="usuario" value="#{loginBean.username}" id="username"/>
-             
+
                 <!--<h:outputText value="Senha:"/>-->
                 <h:inputSecret class="senha" value="#{loginBean.password}" id="password"/>
                 <br/>
                 <h:commandButton class="entrar" id="button" action="#{loginBean.doLogin}"/>
-        
-                <a class="cadastro" href="cadastro.xhtml">Usuário novo? Cadastre-se</a>
+
+                <a class="cadastro" href="../pessoa.jsp">Usuário novo? Cadastre-se</a>
                 <br/>
                 <div class="imagem-erro"></div>
                 <h:messages class="erro" />

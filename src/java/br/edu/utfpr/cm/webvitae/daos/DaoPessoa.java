@@ -10,7 +10,7 @@ import org.hibernate.Query;
 
 /**
  *
- * @author junior
+ * @author eduardo
  */
 public class DaoPessoa extends DaoGenerics<Pessoa> {
 

@@ -9,48 +9,47 @@
         <div id="principal">
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panel id="panel" header="Adicionar Telefone"  closable="true" style="margin:10px;"> 
+                <p:panel id="panel" header="Adicionar E-mail"  closable="true" style="margin:10px;"> 
                     <h:panelGrid columns="3" cellpadding="5">
 
                         <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{telefoneBean.telefone.id}" readonly="true" label="id" size="10"/>  
+                        <p:inputText id="id" value="#{emailBean.email.id}" readonly="true" label="id" size="10"/>  
                         <p:message for="id" /> 
 
-                        <h:outputLabel for="nome" value="Número:*" />
-                        <p:inputText id="nome" value="#{telefoneBean.telefone.numero}" required="true" label="nome" size="50"/>  
+                        <h:outputLabel for="nome" value="E-mail:*" />
+                        <p:inputText id="nome" value="#{emailBean.email.email}" required="true" label="nome" size="50"/>  
                         <p:message for="nome" /> 
 
-                        <h:outputLabel value="Tipo:* " />
-                        <p:selectOneButton value="#{telefoneBean.telefone.tipo}">
-                            <f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
-                            <f:selectItem itemLabel="CELULAR" itemValue="CELULAR" />
-                            <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
-                            <f:selectItem itemLabel="RECADO" itemValue="RECADO" />
+                        <h:outputLabel value="Finalidade:* " />
+                        <p:selectOneButton value="#{emailBean.email.tipo}">
+                            <f:selectItem itemLabel="CONTATO" itemValue="1" />
+                            <f:selectItem itemLabel="RECADO" itemValue="2" />
+                            <f:selectItem itemLabel="COMERCIAL" itemValue="3" />
                         </p:selectOneButton> 
                         <p:message for="nome" /> 
 
                         <h:panelGrid columns="2" cellpadding="3">  
-                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{telefoneBean.addTelefone()}" update="form:growl" ajax="false"/>
+                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{emailBean.addEmail()}" update="form:growl" ajax="false"/>
                         </h:panelGrid> 
                     </h:panelGrid>
                     
                     </p:panel>
                 
                 <p:growl id="growl2" showDetail="true" sticky="true" />  
-                      <p:panel id="panel2" header="Telefones cadastrados"  closable="true" style="margin:10px;"> 
+                      <p:panel id="panel2" header="E-mails cadastrados"  closable="true" style="margin:10px;"> 
                     <h:panelGrid columns="3" cellpadding="5">
                         <h:panelGrid columns="2" cellpadding="5">
-                            <p:dataTable var="tel" value="#{loginBean.usuario.telefones}" style="margin-left: 37px;">  
+                            <p:dataTable var="eml" value="#{loginBean.usuario.emails}" style="margin-left: 37px;">  
                                 <p:column headerText="Id">  
-                                    <h:outputText value="#{tel.id}" />  
+                                    <h:outputText value="#{eml.id}" />  
                                 </p:column>  
 
-                                <p:column headerText="Número">  
-                                    <h:outputText value="#{tel.numero}" />  
+                                <p:column headerText="E-mail">  
+                                    <h:outputText value="#{eml.email}" />  
                                 </p:column>  
 
-                                <p:column headerText="Tipo">  
-                                    <h:outputText value="#{tel.tipo}" />  
+                                <p:column headerText="Finalidade">  
+                                    <h:outputText value="#{eml.tipo}" />  
                                 </p:column>  
                             </p:dataTable>  
 

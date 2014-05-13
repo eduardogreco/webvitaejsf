@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author alauber
+ * @author eduardo
  */
 @WebServlet(name = "PessoaCadastro", urlPatterns = {"/PessoaCadastro"})
 public class PessoaCadastro extends HttpServlet {
@@ -96,7 +96,7 @@ public class PessoaCadastro extends HttpServlet {
             telefone.setPessoa(pessoa);
             daoTelefone.persistir(telefone);
 
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("/admin/login.xhtml");
         } catch (ParseException ex) {
             Logger.getLogger(PessoaCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }

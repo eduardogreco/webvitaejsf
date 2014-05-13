@@ -8,7 +8,7 @@ import br.edu.utfpr.cm.webvitae.model.Localidade;
 
 /**
  *
- * @author Alex
+ * @author eduardo
  */
 public class DaoLocalidade extends DaoGenerics<Localidade> {
 

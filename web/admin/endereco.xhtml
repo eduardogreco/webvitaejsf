@@ -9,7 +9,7 @@
         <div id="principal">
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panel id="panel" header="Informações do Perfil"  closable="true" style="margin:10px;"> 
+                <p:panel id="panel" header="Endereço"  closable="true" style="margin:10px;"> 
                     <h:panelGrid columns="3" cellpadding="5">
 
                         <h:outputLabel for="id" value="Id:" />
@@ -20,68 +20,37 @@
                         <p:inputText id="nome" value="#{end.bairro}" required="true" label="nome" size="50"/>  
                         <p:message for="nome" /> 
 
-                        <h:outputLabel for="email" value="Email:*" />
-                        <p:inputText id="email" value="#{loginBean.usuario.email}" required="true" label="email" size="30"/>  
+                        <h:outputLabel for="email" value="Complemento:" />
+                        <p:inputText id="email" value="#{end.complemento}" required="true" label="email" size="30"/>  
                         <p:message for="email" /> 
 
-                        <h:outputLabel for="cpf" value="CPF:" />
-                        <p:inputText id="cpf" value="#{loginBean.usuario.cpf}" readonly="true" label="cpf" size="15"/>  
+                        <h:outputLabel for="cpf" value="Logradouro:*" />
+                        <p:inputText id="cpf" value="#{end.logradouro}" readonly="true" label="cpf" size="15"/>  
                         <p:message for="cpf" /> 
 
-                        <h:outputLabel for="login" value="Login:" />
-                        <p:inputText id="login" value="#{loginBean.usuario.login}" readonly="true" label="login" size="15"/>  
+                        <h:outputLabel for="login" value="Tipo Logradouro:*" />
+                        <p:inputText id="login" value="#{end.tipoLogradouro}" readonly="true" label="login" size="15"/>  
                         <p:message for="login" /> 
 
-                        <h:outputLabel for="tipo" value="Tipo:" />
-                        <p:inputText id="tipo" value="#{loginBean.usuario.tipo}" readonly="true" label="tipo" size="15"/>  
+                        <h:outputLabel for="tipo" value="Pais:*" />
+                        <p:inputText id="tipo" value="#{end.local.pais}" readonly="true" label="tipo" size="15"/>  
                         <p:message for="tipo" /> 
 
-                        <h:outputLabel for="data" value="Data Cadastro:" />
-                        <p:inputText id="data" value="#{loginBean.usuario.dtCadastro}" readonly="true" label="data" size="15"/>  
+                        <h:outputLabel for="data" value="Estado:*" />
+                        <p:inputText id="data" value="#{end.local.estado}" readonly="true" label="data" size="15"/>  
                         <p:message for="data" /> 
 
-                        <h:outputLabel for="dataN" value="Data Nascimento:" />
-                        <p:inputText id="dataN" value="#{loginBean.usuario.dtNascimento}" readonly="true" label="dataN" size="15"/>  
+                        <h:outputLabel for="dataN" value="Cidade:*" />
+                        <p:inputText id="dataN" value="#{end.local.cidade}" readonly="true" label="dataN" size="15"/>  
                         <p:message for="dataN" /> 
+                        
+                         <h:outputLabel for="dataN" value="CEP:*" />
+                        <p:inputText id="cep" value="#{end.cep}" readonly="true" label="cep" size="15"/>  
+                        <p:message for="cep" /> 
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="5">
-
-                        <h:outputLabel value="Endereços:" />
-                        <p:dataTable var="end" value="#{loginBean.usuario.enderecos}" style="margin-left: 37px;">  
-                            <p:column headerText="Id">  
-                                <h:outputText value="#{end.id}" />  
-                            </p:column>  
-                            <p:column headerText="Bairro">  
-                                <h:outputText value="#{end.bairro}" />  
-                            </p:column>  
-                            <p:column headerText="Número">  
-                                <h:outputText value="#{end.numero}" />  
-                            </p:column>  
-                            <p:column headerText="Complemento">  
-                                <h:outputText value="#{end.complemento}" />  
-                            </p:column>  
-                            <p:column headerText="Logradouro">  
-                                <h:outputText value="#{end.logradouro}" />  
-                            </p:column>  
-                            <p:column headerText="Tipo Logradouro">  
-                                <h:outputText value="#{end.tipoLogradouro}" />  
-                            </p:column>  
-                            <p:column headerText="País">  
-                                <h:outputText value="#{end.local.pais}" />  
-                            </p:column>  
-                            <p:column headerText="Estado">  
-                                <h:outputText value="#{end.local.estado}" />  
-                            </p:column>  
-                            <p:column headerText="Cidade">  
-                                <h:outputText value="#{end.local.cidade}" />  
-                            </p:column>  
-                            <p:column headerText="CEP">  
-                                <h:outputText value="#{end.cep}" />  
-                            </p:column>                         
-                        </p:dataTable>  
-                    </h:panelGrid>
+    
                     <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                        <p:commandButton value="Atualizar Perfil" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
+                        <p:commandButton value="Atualizar Endereço" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
                     </h:panelGrid>
                 </p:panel>
             </h:form>

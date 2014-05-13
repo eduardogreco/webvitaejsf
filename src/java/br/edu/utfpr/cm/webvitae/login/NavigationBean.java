@@ -25,7 +25,7 @@ public class NavigationBean implements Serializable {
 	 * @return Info page name.
 	 */
 	public String redirectCadastro() {
-		return "/faces/cadastro.xhtml?faces-redirect=true";
+		return "../pessoa.jsp";
 	}
 	
 	public String cadastro() {

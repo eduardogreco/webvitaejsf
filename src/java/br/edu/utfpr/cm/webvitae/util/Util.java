@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author marcos
+ * @author eduardo
  */
 public class Util {
 

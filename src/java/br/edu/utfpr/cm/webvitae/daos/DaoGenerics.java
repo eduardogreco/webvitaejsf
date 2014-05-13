@@ -12,7 +12,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author ehrickwilliam
+ * @author eduardo
  */
 public class DaoGenerics<T> implements Dao<T> {
 
