@@ -51,11 +51,16 @@
                                 <p:column headerText="Finalidade">  
                                     <h:outputText value="#{eml.tipo}" />  
                                 </p:column>  
+                                
+                                 <p:column exportable="false" headerText="Alterar" style="width:4%;text-align: center;"> 
+                                    <p:commandButton id="viewButton3" icon="ui-icon-arrowrefresh-1-s" oncomplete="pessoaDelete.show()"/> 
+                                </p:column> 
+                                
+                                <p:column exportable="false" headerText="Excluir" style="width:4%;text-align: center;"> 
+                                    <p:commandButton id="viewButton2" icon="ui-icon-trash" oncomplete="pessoaDelete.show()"/> 
+                                </p:column> 
                             </p:dataTable>  
 
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                            <p:commandButton value="Atualizar Telefone" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
                         </h:panelGrid>
                     </h:panelGrid>
                  </p:panel>

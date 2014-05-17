@@ -41,47 +41,12 @@
                         <p:message for="data" /> 
 
                         <h:outputLabel for="dataN" value="Data Nascimento:" />
-                        <p:inputText id="dataN" value="#{loginBean.usuario.dtNascimento}" readonly="true" label="dataN" size="15"/>  
+                        <p:inputText id="dataN" value="#{loginBean.usuario.dtNascimento}" readonly="false" label="dataN" size="15"/>  
                         <p:message for="dataN" /> 
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="5">
-
-                        <h:outputLabel value="Endereços:" />
-                        <p:dataTable var="end" value="#{loginBean.usuario.enderecos}" style="margin-left: 37px;">  
-                            <p:column headerText="Id">  
-                                <h:outputText value="#{end.id}" />  
-                            </p:column>  
-                            <p:column headerText="Bairro">  
-                                <h:outputText value="#{end.bairro}" />  
-                            </p:column>  
-                            <p:column headerText="Número">  
-                                <h:outputText value="#{end.numero}" />  
-                            </p:column>  
-                            <p:column headerText="Complemento">  
-                                <h:outputText value="#{end.complemento}" />  
-                            </p:column>  
-                            <p:column headerText="Logradouro">  
-                                <h:outputText value="#{end.logradouro}" />  
-                            </p:column>  
-                            <p:column headerText="Tipo Logradouro">  
-                                <h:outputText value="#{end.tipoLogradouro}" />  
-                            </p:column>  
-                            <p:column headerText="País">  
-                                <h:outputText value="#{end.local.pais}" />  
-                            </p:column>  
-                            <p:column headerText="Estado">  
-                                <h:outputText value="#{end.local.estado}" />  
-                            </p:column>  
-                            <p:column headerText="Cidade">  
-                                <h:outputText value="#{end.local.cidade}" />  
-                            </p:column>  
-                            <p:column headerText="CEP">  
-                                <h:outputText value="#{end.cep}" />  
-                            </p:column>                         
-                        </p:dataTable>  
-                    </h:panelGrid>
+                
                     <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                        <p:commandButton value="Atualizar Perfil" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
+                        <p:commandButton value="Atualizar dados" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
                     </h:panelGrid>
                 </p:panel>
             </h:form>

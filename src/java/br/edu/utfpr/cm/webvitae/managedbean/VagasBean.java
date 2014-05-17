@@ -1,16 +1,15 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.edu.utfpr.cm.webvitae.managedbean;
 
 import br.edu.utfpr.cm.webvitae.daos.DaoPessoa;
-import br.edu.utfpr.cm.webvitae.daos.DaoTelefone;
-import br.edu.utfpr.cm.webvitae.login.LoginBean;
-import static br.edu.utfpr.cm.webvitae.login.LoginBean.usuario;
+import br.edu.utfpr.cm.webvitae.daos.DaoVaga;
 import br.edu.utfpr.cm.webvitae.model.Pessoa;
-import br.edu.utfpr.cm.webvitae.model.Telefone;
+import br.edu.utfpr.cm.webvitae.model.Vagas;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,40 +21,35 @@ import org.primefaces.event.FileUploadEvent;
  *
  * @author eduardogreco
  */
-/**
- *
- * @author eduardo
- */
-@ManagedBean(name = "telefoneBean")
+@ManagedBean(name = "vagasBean")
 @RequestScoped
-public class TelefoneBean implements Serializable {
+public class VagasBean implements Serializable {
 
-    private DaoTelefone daoTelefone = new DaoTelefone();
-    private static Telefone telefone;
+    private DaoVaga daoVaga = new DaoVaga();
+    private static Vagas vaga;
     public static Pessoa usuario;
     private static DaoPessoa daoPessoa = new DaoPessoa();
-    private int idTelefone = 0;
+    private int idVaga = 0;
 
-    public TelefoneBean() {
-        if (telefone == null) {
-            telefone = new Telefone();
+    public VagasBean() {
+        if (vaga == null) {
+            vaga = new Vagas();
         }
     }
 
-    public Telefone getTelefone() {
-        return telefone;
+    public Vagas getVagas() {
+        return vaga;
     }
 
-    public void setTelefone(Telefone e) {
-        telefone = e;
+    public void setVagas(Vagas e) {
+        vaga = e;
     }
 
-    public void addTelefone() {
+    public void addVagas() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            telefone.setPessoa(LoginBean.usuario);
-            daoTelefone.persistir(telefone);
-            telefone = new Telefone();
+            daoVaga.persistir(vaga);
+            vaga = new Vagas();
             context.addMessage(null, new FacesMessage("Sucesso", "O Telefone foi inserido com sucesso!"));
         } catch (Exception e) {
             context.addMessage(null, new FacesMessage("Erro", "Erro ao gravar o telefone."));
@@ -64,10 +58,10 @@ public class TelefoneBean implements Serializable {
     }
 
     public void deleteTelefone(int id_tel) {
-        telefone = daoTelefone.obterPorId(id_tel);
+        vaga = daoVaga.obterPorId(id_tel);
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            daoTelefone.remover(telefone);
+            daoVaga.remover(vaga);
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível remover o usuário."));
             ex.printStackTrace();
@@ -76,27 +70,27 @@ public class TelefoneBean implements Serializable {
 
     public void uploadAction(FileUploadEvent event) {
         String nome = "";
-        if (daoTelefone == null) {
-            daoTelefone = new DaoTelefone();
+        if (daoVaga == null) {
+            daoVaga = new DaoVaga();
         }
-        if (telefone.getId() == null) {
-            idTelefone = (daoTelefone.obterUltimoId() + 1);
+        if (vaga.getId() == null) {
+            idVaga = (daoVaga.obterUltimoId() + 1);
         } else {
-            idTelefone = telefone.getId().intValue();
+            idVaga = vaga.getId().intValue();
         }
     }
 
     public int getId() {
-        return idTelefone;
+        return idVaga;
     }
 
     public void setPrincipal() {
         int id = 0;
-        if (telefone.getId() != null) {
-            id = telefone.getId().intValue();
+        if (vaga.getId() != null) {
+            id = vaga.getId().intValue();
         }
         if (id == 0) {
-            id = (daoTelefone.obterUltimoId() + 1);
+            id = (daoVaga.obterUltimoId() + 1);
         }
 
     }

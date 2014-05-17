@@ -12,6 +12,9 @@
                     <li class="icn_new_article">
                         <h:commandLink value="Pessoal" action="#{pageManager.setPagCadastro()}" />
                     </li>
+                    <li class="icn_edit_article">
+                        <h:commandLink value="Alterar senha" action="#{pageManager.setPagSenha()}" />
+                    </li>
                      <li class="icn_new_article">
                         <h:commandLink value="Endereço" action="#{pageManager.setPagEndereco()}" />
                     </li>
@@ -25,13 +28,13 @@
                 <h3>Currículo</h3>
                 <ul class="toggle">
                     <li class="icn_new_article">
-                        <h:commandLink value="Experiência" action="#{pageManager.setPagCadastro()}" />
+                        <h:commandLink value="Experiência" action="#{pageManager.setPagExperiencia()}" />
                     </li>
                     <li class="icn_new_article">
-                        <h:commandLink value="Formação" action="#{pageManager.setPagCadastro()}" />
+                        <h:commandLink value="Formação" action="#{pageManager.setPagFormacao()}" />
                     </li>
                     <li class="icn_new_article">
-                        <h:commandLink value="Objetivos" action="#{pageManager.setPagCadastro()}" />
+                        <h:commandLink value="Objetivos" action="#{pageManager.setPagObjetivos()}" />
                     </li>
                     <!--                    <li class="icn_new_article">
                                             <h:commandLink value="Comissões" action="{pageManager.setPagComissoes()}" />
@@ -40,14 +43,14 @@
                 <h3>Vagas disponíveis</h3>
                 <ul class="toggle">
                     <li class="icn_categories">
-                        <h:commandLink value="Listar vagas" action="#{pageManager.setPagCadastro()}" />
+                        <h:commandLink value="Listar vagas" action="#{pageManager.setPagListarVagas()}" />
                     </li>
                 </ul>
                 <c:if test="#{loginBean.tipoPessoa == 'admin'}">
                     <h3>Administração</h3>
                     <ul class="toggle">
-                        <li class="icn_categories"> <h:commandLink value="Consultar currículo" action="#{pageManager.setPagCadastro()}" /></li>
-                        <li class="icn_categories"> <h:commandLink value="Gerenciar Vagas" action="#{pageManager.setPagCadastro()}" /></li>
+                        <li class="icn_categories"> <h:commandLink value="Consultar currículo" action="#{pageManager.setPesquisarCurriculo()}" /></li>
+                        <li class="icn_categories"> <h:commandLink value="Gerenciar Vagas" action="#{pageManager.setgerenciarVagas()}" /></li>
                     </ul>
                 </c:if>
             </h:form>

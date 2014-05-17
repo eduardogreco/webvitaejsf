@@ -1,0 +1,78 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cliente</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <!--       Panel somente para deixar com um cara melhor nosso
+            cadastro-->
+       <p:panel header="CLIENTE">
+       <p:messages />
+         <h:panelGrid columns="2">
+            <h:outputLabel value="NOME:" for="nome" />
+            <!--                    veja o value chamando o Bean 
+            depois o objeto cliente e o atributo nome e assim segue os próximos-->
+            <p:inputText id="nome" label="nome" value="#{vagasBean.vagas.nome}" maxlength="14" size="40"  />
+            <!--Essa parte vamos fazer em breve para somente adicionar CPF ou CNPJ nunca os dois-->
+            <h:outputLabel value="TIPO DE DOCUMENTO:"  for="cpf-cnpj"/>                                 
+            <h:selectOneRadio id="cpf-cnpj" label="cpf-cnpj" >
+                <f:selectItem itemLabel="CNPJ" />
+                <f:selectItem itemLabel="CPF" />                     
+            </h:selectOneRadio>
+ 
+            <h:outputLabel value="Descricao:" for="cpf" />
+            <p:inputText id="cpf" label="cpf" value="#{vagasBean.vagas.descricao}" maxlength="14" size="40"  />                    
+ 
+            <h:outputLabel value="Quant:" for="cnpj" />
+            <p:inputText id="cnpj" label="cnpj" value="#{vagasBean.vagas.quantidade}" maxlength="14" size="40"  />
+ 
+            <!--Botão com utiliando a propriedade ActionListener executando o metodo salvar sem nenhuma regra de navegação, e atualizando todo o form, veja mais em http://codeerror.wordpress.com/2009/06/01/jsf-actionlistener-outra-possibilidade/-->
+            <p:commandButton id="btnSalvar" value="SALVAR" actionListener="#{vagasBean.addVagas()}" update="form" />
+          </h:panelGrid>
+ 
+            <!--criando minha tabela, incluido no value a lista de cliente, definino um variavel de acesso para cada registro, para acessar um unico registro-->
+            <p:dataTable id="tabela" value="#{vagasBean.vagas}" var="cli" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                <!--                    Definindo o cabeçalho da Tabela-->
+                <f:facet name="header">  
+                    Lista de Clientes  
+                </f:facet>
+                <!--Criando uma coluna para receber um determinando dado que tem em um objeto da nossa lista, nesse caso nome de cliente-->
+                <p:column headerText="NOME" style="text-align: center">
+                    <!--Aqui onde acesso o objeto cli.nome e apresentamos na tabela, e assim com os seguintes-->
+                    <h:outputText value="#{cli.nome}" />
+                </p:column>
+                <p:column headerText="CPF/CNPJ" style="text-align: center">
+                    <!--nesse tem dois pois posso ter CPF ou CNPJ, vai aparecer os dois se tiver, pois não tratamos isso ainda-->
+                    <h:outputText value="#{cli.quantidade}" />
+                </p:column>
+                <p:column headerText="ALTERAR - EXCLUIR" style="text-align: center">
+                    <!--Abaixo o botão editar com uma Action do nosso metodo editar que criamos no Bean-->
+                    <p:commandButton action="#{vagasBean.addVagas()}" value="EDITAR" title="Editar" ajax="false"  >
+                        <!-- Abaixo temos o setPropertyActionListener que é utilizado para pegar o objeto cli e setar no objeto cliente la no nosso bean, para editarmos-->
+                        <f:setPropertyActionListener value="#{cli}" target="#{vagasBean.vagas}" />
+                    </p:commandButton>
+                    <!-- Abaixo temos o botão excluir com a propriedade onclick contendo o nome do modal e acessando um método de abri-lo que é o show, também existe o hide que é para feixa-lo.-->
+                    <p:commandButton value="EXCLUIR" title="Excluir" onclick="confirmation.show()" style="margin-left: 5px" >
+                        <!-- Abaixo temos o setPropertyActionListener que é utilizado para pegar o objeto cli e setar no objeto cliente la no nosso bean, para posteriomente excluirmos-->
+                        <f:setPropertyActionListener value="#{cli}" target="#{vagasBean.vagas}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+        </h:form>   
+        <!-- Abaixo temos um modal de confirmação de exclusão repare que ele é fora do form principal, pois se colocarmos dentro podemos ter alguns problemas com isso.-->
+        <h:form id="dlg">
+            <p:confirmDialog message="Deseja realmente excluir este registro?" hideEffect="explode" header="Aviso" severity="alert" widgetVar="confirmation">
+                <!--caso seja sim chamo o metodo excluir, e fecho o modal com o oncomplete, tenho o process que estou dizendo para processar o form, e update para atualizar a tabela-->
+               <!-- <p:commandButton id="btnSim" value="Sim" oncomplete="confirmation.hide();" actionListener="#{vagasBean.addVagas()}" process="@form" update="form:tabela" /> -->
+                <!--caso seja não somente fecha o modal-->
+                <p:commandButton id="btnNao" value="Não" onclick="confirmation.hide();" type="button"/>
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+        </ui:composition>   

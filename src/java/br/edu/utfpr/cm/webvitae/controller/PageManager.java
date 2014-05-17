@@ -20,12 +20,16 @@ public class PageManager implements Serializable {
         this.paginaAtiva = paginaAtiva;
     }
 
-    public void setPagProdutos() {
-        this.paginaAtiva = "./admin/produtos.xhtml";
+    public void setPagFormacao() {
+        this.paginaAtiva = "./admin/formacao.xhtml";
     }
 
     public void setPagCadastro() {
         this.paginaAtiva = "./admin/cadastro.xhtml";
+    }
+    
+    public void setPagSenha() {
+        this.paginaAtiva = "./admin/senha.xhtml";
     }
 
     public void setPagTelefone() {
@@ -39,60 +43,30 @@ public class PageManager implements Serializable {
     public void setPagEmail() {
         this.paginaAtiva = "./admin/email.xhtml";
     }
-
-    public void setPagComissoes() {
-        this.paginaAtiva = "./admin/comissoes.xhtml";
+    
+    public void setPagObjetivos() {
+        this.paginaAtiva = "./admin/objetivo.xhtml";
     }
 
-    public void setPagCompras() {
-        this.paginaAtiva = "./admin/compras.xhtml";
-    }
-
-    public void setPagConsultarMovimentacoes() {
-        this.paginaAtiva = "./admin/consultar_movimentacoes.xhtml";
-    }
-
-    public void setPagGerenciarComissoes() {
-        this.paginaAtiva = "./admin/gerenciar_comissoes.xhtml";
-    }
-
-    public void setPagListarCompras() {
-        this.paginaAtiva = "./admin/listar_compras.xhtml";
-    }
-
-    public void setPagListarProdutos() {
-        this.paginaAtiva = "./admin/listar_produtos.xhtml";
-    }
-
-    public void setPagListarVendas() {
-        this.paginaAtiva = "./admin/listar_vendas.xhtml";
-    }
 
     public void setPagPerfil() {
         this.paginaAtiva = "./admin/perfil.xhtml";
     }
 
-    public void setPagSenha() {
-        this.paginaAtiva = "./admin/senha.xhtml";
+    public void setPagExperiencia() {
+        this.paginaAtiva = "./admin/experiencia.xhtml";
+    }
+    
+     public void setPagListarVagas() {
+        this.paginaAtiva = "./admin/listarVagas.xhtml";
     }
 
-    public void setPagVendas() {
-        this.paginaAtiva = "./admin/vendas.xhtml";
+    public void setPesquisarCurriculo() {
+        this.paginaAtiva = "./admin/pesquisarCurriculo.xhtml";
+    }
+    
+    public void setgerenciarVagas() {
+        this.paginaAtiva = "./admin/vagas.xhtml";
     }
 
-    public void setGerenciarUsuarios() {
-        this.paginaAtiva = "./admin/gerenciar_usuarios.xhtml";
-    }
-
-    public void setComissoesReceber() {
-        this.paginaAtiva = "./admin/comissoes_receber.xhtml";
-    }
-
-    public void setPagListarVendedores() {
-        this.paginaAtiva = "./admin/listar_vendedores.xhtml";
-    }
-
-    public void setPagListarTodosProdutos() {
-        this.paginaAtiva = "./admin/listar_todos_produtos.xhtml";
-    }
 }

@@ -30,14 +30,14 @@
                         <p:message for="nome" /> 
 
                         <h:panelGrid columns="2" cellpadding="3">  
-                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{telefoneBean.addTelefone()}" update="form:growl" ajax="false"/>
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{telefoneBean.addTelefone()}" update="form:growl" ajax="false"/>
                         </h:panelGrid> 
                     </h:panelGrid>
-                    
-                    </p:panel>
-                
+
+                </p:panel>
+
                 <p:growl id="growl2" showDetail="true" sticky="true" />  
-                      <p:panel id="panel2" header="Telefones cadastrados"  closable="true" style="margin:10px;"> 
+                <p:panel id="panel2" header="Telefones cadastrados"  closable="true" style="margin:10px;"> 
                     <h:panelGrid columns="3" cellpadding="5">
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:dataTable var="tel" value="#{loginBean.usuario.telefones}" style="margin-left: 37px;">  
@@ -52,15 +52,28 @@
                                 <p:column headerText="Tipo">  
                                     <h:outputText value="#{tel.tipo}" />  
                                 </p:column>  
+
+                                <p:column exportable="false" headerText="Alterar" style="width:4%;text-align: center;"> 
+                                    <p:commandButton id="viewButton3" icon="ui-icon-arrowrefresh-1-s" oncomplete="pessoaDelete.show()"/> 
+                                </p:column> 
+                                
+                                <p:column exportable="false" headerText="Excluir" style="width:4%;text-align: center;"> 
+                                    <p:commandButton id="viewButton2" icon="ui-icon-trash" oncomplete="pessoaDelete.show()"/> 
+                                </p:column> 
                             </p:dataTable>  
 
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                            <p:commandButton value="Atualizar Telefone" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
+                            <p:confirmDialog id="dialogDelete" message="Deseja excluir este registro?"  
+                                             header="Deletar registro" severity="alert" widgetVar="pessoaDelete"> 
+                                <p:commandButton value="Sim" style="margin-left: 25px;" actionListener="#{telefoneBean.deleteTelefone(1)}" oncomplete="pessoaDelete.hide(); #{telefoneBean.deleteTelefone(0)}"/>
+                                <p:commandButton value="Não" onclick="#{telefoneBean.deleteTelefone(1)}" style="margin-left: 40px;"/>
+                            </p:confirmDialog>
+
                         </h:panelGrid>
                     </h:panelGrid>
-                 </p:panel>
+                </p:panel>
+
             </h:form>
+
         </div>
     </c:if>
 </ui:composition>

@@ -150,4 +150,8 @@ public class LoginBean implements Serializable {
     public void setUsuario(Pessoa usuario) {
         LoginBean.usuario = usuario;
     }
+    
+    public void atualizaObjetivos(){
+        LoginBean.usuario.getObjetivos();
+    }
 }

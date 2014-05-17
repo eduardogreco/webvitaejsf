@@ -37,6 +37,9 @@ public class Endereco implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     private Localidade local;
 
+    public Endereco() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -44,6 +44,12 @@ public class Pessoa implements Serializable{
     private List<Endereco> enderecos;
     @OneToMany(mappedBy = "pessoa")
     private List<Email> emails;
+    @OneToMany(mappedBy = "pessoa")
+    private List<Experiencia> experiencias;
+    @OneToMany(mappedBy = "pessoa")
+    private List<Formacao> formacoes;
+     @OneToMany(mappedBy = "pessoa")
+    private List<Objetivo> objetivos;
 
     public Long getId() {
         return id;
@@ -135,6 +141,30 @@ public class Pessoa implements Serializable{
 
     public void setEmails(List<Email> emails) {
         this.emails = emails;
+    }
+
+    public List<Experiencia> getExperiencias() {
+        return experiencias;
+    }
+
+    public void setExperiencias(List<Experiencia> experiencias) {
+        this.experiencias = experiencias;
+    }
+
+    public List<Formacao> getFormacoes() {
+        return formacoes;
+    }
+
+    public void setFormacoes(List<Formacao> formacoes) {
+        this.formacoes = formacoes;
+    }
+
+    public List<Objetivo> getObjetivos() {
+        return objetivos;
+    }
+
+    public void setObjetivos(List<Objetivo> objetivos) {
+        this.objetivos = objetivos;
     }
     
 }
