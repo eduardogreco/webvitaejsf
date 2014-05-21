@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Login</title>
+        <link href="../resources/css/LayoutLogin.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <!--        <h3>Login  -  <b style="color:#0848b3 ">TSI</b><b style="color:#017c10 ">B</b><b style="color:#d00a0a ">a</b><b style="color:#e9f107 ">y</b></h3>-->
+        <div id="login">
+            <h:form id="form-login">
+                <!--<h:outputText value="Usuário:"/>-->
+                <h:inputText class="usuario" value="#{loginBean.username}" id="username"/>
+
+                <!--<h:outputText value="Senha:"/>-->
+                <h:inputSecret class="senha" value="#{loginBean.password}" id="password"/>
+                <br/>
+                <h:commandButton class="entrar" id="button" action="#{loginBean.doLogin}"/>
+                
+                <p:commandLink value="Usuário novo? Cadastre-se" id="cadastrar" oncomplete="dialogCadastrar.show()" />
+                               
+                <br/>
+                <div class="imagem-erro"></div>
+                <h:messages class="erro" />
+                <br/>
+                </h:form>
+                <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:tab id="personal" title="Pessoa">                        
+                            <p:messages id="messages" showDetail="true" autoUpdate="true"/>
+                            <h:messages errorClass="error"/>
+                            <h:panelGrid id="panelCadastrar" columns="2" cellpadding="5" styleClass="grid">
+                                <h:outputText value="Nome: *"/>
+                                <p:inputText id="nome" required="true" label="Nome" value="#{cadastroLoginBean.pessoa.nome}"/>
+                                <h:outputText value="CPF: *"/>
+                                <p:inputMask id="cpf" required="true" label="CPF" value="#{cadastroLoginBean.pessoa.cpf}" mask="999.999.999-99"  />
+                                <h:outputLabel for="dataN" value="Data Nascimento:" />
+                                <p:calendar id="dataN" value="#{cadastroLoginBean.pessoa.dtNascimento}" pattern="dd-MM-yyyy" effect="explode" navigator="true" />                          
+                                <h:outputText value="Login: *"/>
+                                <p:inputText id="login" required="true" label="Login" value="#{cadastroLoginBean.pessoa.login}"/>          
+                                <h:outputText value="Senha: *"/>
+                                <p:password id="senha" required="true" label="Senha" value="#{cadastroLoginBean.pessoa.senha}" match="senha2" feedback="true"/>
+                                <h:outputText value="Confirme a senha: *"/>
+                                <p:password id="senha2" required="true" label="Senha2" value="#{cadastroLoginBean.pessoa.senha}" feedback="true"/>
+                            </h:panelGrid> 
+                            <h:outputText value="#{cadastroLoginBean.pessoa.dtNascimento}" id="display">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                            <p:commandButton value="Adicionar" action="#{cadastroLoginBean.addPessoa()}"  icon="ui-icon-disk" oncomplete="dialogCadastrar.hide()"/>                            
+                            <p:commandButton value="limpar" type="reset"  icon="ui-icon-clean" ajax="false"/>                                    
+                    </p:tab>                    
+                </p:dialog>            
+            </h:form>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal">
+            <h:form id="formPrincipal">
+                <p:dataTable var="lista" value="#{loginBean.usuario.telefones}"
+                             id="tabelaPessoas" style="width:70%">
+                    <f:facet name="header">Telefones</f:facet>
+
+                    <p:column headerText="Id">
+
+                        <h:outputText value="#{lista.id}" />
+                    </p:column>
+                    <p:column headerText="Número">
+
+                        <h:outputText value="#{lista.numero}" />
+                    </p:column>
+                    <p:column headerText="Tipo">
+
+                        <h:outputText value="#{lista.tipo}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                       oncomplete="dialogAlterar.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                            <f:setPropertyActionListener target="#{telefoneBean.telefone}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                       oncomplete="confirmation.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                            <f:setPropertyActionListener target="#{telefoneBean.telefone}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:commandButton value="Cadastrar" id="cadastrar"
+                                 oncomplete="dialogCadastrar.show()" />
+            </h:form>
+            <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:panelGrid id="panelAlterar" columns="2">
+                        <h:outputText value="Número:" />
+                        <p:inputText value="#{telefoneBean.telefone.numero}" />
+                      <h:outputLabel for="txt3" value="Tipo:*" />
+                        <h:selectOneMenu id="txt3" value="#{telefoneBean.telefone.tipo}" required="true" label="Text 3">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="PARTICULAR" itemValue="PARTICULAR" />
+                            <f:selectItem itemLabel="CONTATO" itemValue="CONTATO" />
+                            <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+                        </h:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{telefoneBean.alterar}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Número:*" />
+                        <p:inputText value="#{telefoneBean.telefone.numero}" />
+
+                        <h:outputLabel for="txt3" value="Tipo:*" />
+                        <h:selectOneMenu id="txt3" value="#{telefoneBean.telefone.tipo}" required="true" label="Text 3">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="PARTICULAR" itemValue="PARTICULAR" />
+                            <f:selectItem itemLabel="CONTATO" itemValue="CONTATO" />
+                            <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+                        </h:selectOneMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton value="Cadastrar"
+                                     actionListener="#{telefoneBean.addTelefone()}"
+                                     update="tabelaPessoas"
+                                     oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                                 message="Você gostaria de Deletar o #{telefoneBean.telefone.numero}?"
+                                 header="Excluir" severity="alert" widgetVar="confirmation">
+
+                    <p:commandButton id="confirm" value="Sim"
+                                     oncomplete="confirmation.hide()"
+                                     actionListener="#{telefoneBean.deleteTelefone}"
+                                     update=":formPrincipal:tabelaPessoas" />
+                    <p:commandButton id="decline" value="Não"
+                                     onclick="confirmation.hide()" type="button" />
+
+                </p:confirmDialog>
+            </h:form>
+        </div>
+    </c:if>
+</ui:composition>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <c:if test="#{loginBean.loggedIn}">
+        <div id="principal">
+            <p></p>
+        </div>
+    </c:if>
+</ui:composition>
