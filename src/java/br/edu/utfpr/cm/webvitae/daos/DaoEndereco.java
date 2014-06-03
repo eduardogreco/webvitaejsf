@@ -5,7 +5,6 @@
 package br.edu.utfpr.cm.webvitae.daos;
 
 import br.edu.utfpr.cm.webvitae.model.Endereco;
-import br.edu.utfpr.cm.webvitae.model.Telefone;
 import java.util.List;
 import org.hibernate.Query;
 
@@ -20,7 +19,7 @@ public class DaoEndereco extends DaoGenerics<Endereco> {
     }
 
     public int obterUltimoId() {
-        List<Telefone> lista = null;
+        List<Endereco> lista = null;
 
         Query query = session.createQuery("FROM " + alvo.getSimpleName() + " C WHERE C.id = (select  max(id) from " + alvo.getSimpleName() + ")");
         lista = query.list();
@@ -28,5 +27,17 @@ public class DaoEndereco extends DaoGenerics<Endereco> {
             return lista.get(0).getId().intValue();
         }
         return 0;
+    }
+    
+    public void alterar(Endereco endereco) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(endereco);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
     }
 }

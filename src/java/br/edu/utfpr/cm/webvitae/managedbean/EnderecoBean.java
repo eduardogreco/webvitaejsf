@@ -9,7 +9,10 @@ package br.edu.utfpr.cm.webvitae.managedbean;
 import br.edu.utfpr.cm.webvitae.daos.DaoEndereco;
 import br.edu.utfpr.cm.webvitae.login.LoginBean;
 import br.edu.utfpr.cm.webvitae.model.Endereco;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -24,6 +27,7 @@ import org.primefaces.event.FileUploadEvent;
 @RequestScoped
 public class EnderecoBean implements Serializable {
 
+    List enderecos = new ArrayList();
     private DaoEndereco daoEndereco = new DaoEndereco();
     private static Endereco endereco;
     private int idEndereco = 0;
@@ -50,10 +54,31 @@ public class EnderecoBean implements Serializable {
             endereco = new Endereco();
             context.addMessage(null, new FacesMessage("Sucesso", "O e-mail foi inserido com sucesso!"));
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage("Erro", "Erro ao gravar o email."));
+            context.addMessage(null, new FacesMessage("Erro", "Erro ao gravar o endereco."));
             e.printStackTrace();
         }
     }
+    
+      public void deleteEndereco() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            DaoEndereco daoEndereco = new DaoEndereco();
+            daoEndereco.remover(endereco);
+            enderecos = new DaoEndereco().listar();
+            endereco = new Endereco();
+            context.addMessage(null, new FacesMessage("Sucesso", "Endereço removido com sucesso."));
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível remover o usuário."));
+            ex.printStackTrace();
+        }
+    }
+
+    public void alterar(ActionEvent actionEvent) {
+        daoEndereco.alterar(endereco);
+        enderecos = new DaoEndereco().listar();
+        endereco = new Endereco();
+    }
+    
 
     public void uploadAction(FileUploadEvent event) {
         String nome = "";

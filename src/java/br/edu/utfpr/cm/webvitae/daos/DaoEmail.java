@@ -5,15 +5,21 @@
  */
 package br.edu.utfpr.cm.webvitae.daos;
 
+import br.edu.utfpr.cm.webvitae.controller.TransactionManager;
 import br.edu.utfpr.cm.webvitae.model.Email;
+import br.edu.utfpr.cm.webvitae.model.Pessoa;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author eduardogreco
  */
 public class DaoEmail extends DaoGenerics<Email> {
+
+    protected Session session = TransactionManager.getCurrentSession();
 
     public DaoEmail() {
         super(Email.class);
@@ -29,4 +35,41 @@ public class DaoEmail extends DaoGenerics<Email> {
         }
         return 0;
     }
+
+    public void alterar(Email email) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(email);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List listar() {
+        try {
+            Criteria cri = session.createCriteria(Email.class);
+            return cri.list();
+        } finally {
+            session.close();
+
+        }
+    }
+
+    public void excluir(Email email) {
+
+        try {
+            session.beginTransaction();
+            session.delete(email);
+            session.getTransaction().commit();
+
+        } finally {
+            session.close();
+
+        }
+    }
+
 }

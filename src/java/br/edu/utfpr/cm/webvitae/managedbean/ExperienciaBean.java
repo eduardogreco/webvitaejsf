@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.utfpr.cm.webvitae.managedbean;
 
 import br.edu.utfpr.cm.webvitae.daos.DaoExperiencia;
 import br.edu.utfpr.cm.webvitae.login.LoginBean;
 import br.edu.utfpr.cm.webvitae.model.Experiencia;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -24,11 +27,14 @@ import org.primefaces.event.FileUploadEvent;
 @RequestScoped
 public class ExperienciaBean implements Serializable {
 
+    List experiencias = new ArrayList();
     private DaoExperiencia daoExperiencia = new DaoExperiencia();
     private static Experiencia experiencia;
     private int idExperiencia = 0;
+    private String[] selectedCities;
+    private List<String> cities;
 
-   public ExperienciaBean() {
+    public ExperienciaBean() {
         if (experiencia == null) {
             experiencia = new Experiencia();
         }
@@ -82,5 +88,50 @@ public class ExperienciaBean implements Serializable {
 
     }
 
-}
+    public void alterar(ActionEvent actionEvent) {
+        daoExperiencia.alterar(experiencia);
+        experiencias = new DaoExperiencia().listar();
+        experiencia = new Experiencia();
+    }
 
+    public void deleteExperiencia() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            DaoExperiencia daoExperiencia = new DaoExperiencia();
+            daoExperiencia.remover(experiencia);
+            experiencias = new DaoExperiencia().listar();
+            experiencia = new Experiencia();
+            context.addMessage(null, new FacesMessage("Sucesso", "Experiencia removido com sucesso."));
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível remover o usuário."));
+            ex.printStackTrace();
+        }
+    }
+
+    @PostConstruct
+    public void init() {
+        cities = new ArrayList<String>();
+        cities.add("San Francisco");
+        cities.add("London");
+        cities.add("Paris");
+        cities.add("Istanbul");
+        cities.add("Berlin");
+        cities.add("Barcelona");
+        cities.add("Rome");
+        cities.add("Sao Paulo");
+        cities.add("Amsterdam");
+    }
+
+    public String[] getSelectedCities() {
+        return selectedCities;
+    }
+
+    public void setSelectedCities(String[] selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+
+    public List<String> getCities() {
+        return cities;
+    }
+
+}

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.utfpr.cm.webvitae.daos;
 
 import br.edu.utfpr.cm.webvitae.model.Formacao;
@@ -14,9 +13,9 @@ import org.hibernate.Query;
  *
  * @author eduardogreco
  */
-public class DaoFormacao extends DaoGenerics<Formacao>  {
-    
-     public DaoFormacao() {
+public class DaoFormacao extends DaoGenerics<Formacao> {
+
+    public DaoFormacao() {
         super(Formacao.class);
     }
 
@@ -29,5 +28,17 @@ public class DaoFormacao extends DaoGenerics<Formacao>  {
             return lista.get(0).getId().intValue();
         }
         return 0;
+    }
+
+    public void alterar(Formacao formacao) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(formacao);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
     }
 }

@@ -7,106 +7,154 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="form">
-                <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panel id="panel" header="Endereço"  closable="true" style="margin:10px;"> 
-                    <h:panelGrid columns="1" cellpadding="1">
+            <h:form id="formPrincipal">
+                <p:dataTable var="lista" value="#{loginBean.usuario.enderecos}"
+                             id="tabelaPessoas" style="width:70%">
+                    <f:facet name="header">Endereços</f:facet>
 
-                        <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{enderecoBean.endereco.id}" readonly="true" label="id" size="10"/>  
-                        <p:message for="id" /> 
+                    <p:column headerText="Id">
 
-                        <h:outputLabel for="cep" value="CEP:*" />
-                        <p:inputMask id="cep" value="#{enderecoBean.endereco.cep}" readonly="false" label="cep" size="15" mask="99999-999"/>
-                        <p:message for="cep" /> 
+                        <h:outputText value="#{lista.id}" />
+                    </p:column>
+                    <p:column headerText="Logradouro">
 
-                        <h:outputLabel value="Tipo Logradouro:*" />
-                        <p:selectOneButton value="#{enderecoBean.endereco.tipoLogradouro}">
-                            <f:selectItem itemLabel="RUA" itemValue="RUA" />
-                            <f:selectItem itemLabel="AVENIDA" itemValue="AVENIDA" />
-                            <f:selectItem itemLabel="RODOVIA" itemValue="RODOVIA" />
-                        </p:selectOneButton> 
+                        <h:outputText value="#{lista.logradouro}" />
+                    </p:column>
+                    <p:column headerText="Número">
 
-                        <h:outputLabel for="logradouro" value="Logradouro:*" />
-                        <p:inputText id="logradouro" value="#{enderecoBean.endereco.logradouro}" readonly="false" label="logradouro" size="70"/>  
-                        <p:message for="logradouro" /> 
+                        <h:outputText value="#{lista.numero}" />
+                    </p:column>
+                    <p:column headerText="Complemento">
 
-                        <h:outputLabel for="numero" value="Número*" />
-                        <p:inputText id="numero" value="#{enderecoBean.endereco.numero}" readonly="false" label="numero" size="10"/>  
-                        <p:message for="numero" /> 
+                        <h:outputText value="#{lista.complemento}" />
+                    </p:column>
+                    <p:column headerText="Cep">
 
-                        <h:outputLabel for="comple" value="Complemento:" />
-                        <p:inputText id="comple" value="#{enderecoBean.endereco.complemento}" required="false" label="comple" size="70"/>  
-                        <p:message for="comple" /> 
+                        <h:outputText value="#{lista.cep}" />
+                    </p:column>
+                    <p:column headerText="Bairro">
 
-                        <h:outputLabel for="bairro" value="Bairro:*" />
-                        <p:inputText id="bairro" value="#{enderecoBean.endereco.bairro}" required="true" label="bairro" size="50"/>  
-                        <p:message for="bairro" /> 
+                        <h:outputText value="#{lista.bairro}" />
+                    </p:column>
+                    <p:column headerText="Cidade">
 
-                        <h:outputLabel for="pais" value="Pais:*" />
-                        <p:inputText id="pais" value="#{enderecoBean.endereco.local.pais}" readonly="false" label="tipo" size="15"/>  
-                        <p:message for="pais" /> 
+                        <h:outputText value="#{lista.local.cidade}" />
+                    </p:column>
+                    <p:column headerText="Estado">
 
-                        <h:outputLabel for="estado" value="Estado:*" />
-                        <p:inputText id="estado" value="#{enderecoBean.endereco.local.estado}" readonly="false" label="estado" size="15"/>  
-                        <p:message for="estado" /> 
+                        <h:outputText value="#{lista.local.estado}" />
+                    </p:column>
+                    <p:column headerText="Pais">
 
-                        <h:outputLabel for="cidade" value="Cidade:*" />
-                        <p:inputText id="cidade" value="#{enderecoBean.endereco.local.cidade}" readonly="false" label="cidade" size="15"/>  
-                        <p:message for="cidade" /> 
+                        <h:outputText value="#{lista.local.pais}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                       oncomplete="dialogAlterar.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                            <f:setPropertyActionListener target="#{enderecoBean.endereco}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                       oncomplete="confirmation.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                            <f:setPropertyActionListener target="#{enderecoBean.endereco}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                    </p:column>
 
-                        <h:panelGrid columns="2" cellpadding="3">  
-                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{enderecoBean.addEndereco()}" update="form:growl" ajax="false"/>
-                        </h:panelGrid> 
+                </p:dataTable>
 
-                    </h:panelGrid>
-                </p:panel>
+                <p:commandButton value="Cadastrar" id="cadastrar"
+                                 oncomplete="dialogCadastrar.show()" />
+            </h:form>
+            <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:panelGrid id="panelAlterar" columns="2">
+                        <h:outputText value="Logradouro:*" />
+                        <p:inputText value="#{enderecoBean.endereco.logradouro}" size="50" />
+                        <h:outputText value="Número" />
+                        <p:inputText value="#{enderecoBean.endereco.numero}" size="10"/>
+                        <h:outputText value="Complemento:" />
+                        <p:inputText value="#{enderecoBean.endereco.complemento}" size="50" />
+                        <h:outputText value="Cep:*" />
+                        <p:inputText value="#{enderecoBean.endereco.cep}" size="10"/>
+                        <h:outputText value="Bairro:*" />
+                        <p:inputText value="#{enderecoBean.endereco.bairro}" size="30"/>
+                        <h:outputText value="Cidade:*" />
+                        <p:inputText value="#{enderecoBean.endereco.local.cidade}" size="50" />
+                        <h:outputText value="Estado:*" />
+                        <h:selectOneMenu id="txt3" value="#{enderecoBean.endereco.local.estado}" required="true" label="Text 3">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="PR" itemValue="PR" />
+                            <f:selectItem itemLabel="SP" itemValue="SP" />
+                            <f:selectItem itemLabel="RS" itemValue="RS" />
+                            <f:selectItem itemLabel="RS" itemValue="SC" />
+                        </h:selectOneMenu>
+                        <h:outputText value="Pais:*" />
+                        <h:selectOneMenu id="txt4" value="#{enderecoBean.endereco.local.pais}" required="true" label="Text 4">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="BR" itemValue="PR" />
+                            <f:selectItem itemLabel="PY" itemValue="SP" />
+                        </h:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{enderecoBean.alterar}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
 
-                <p:growl id="growl2" showDetail="true" sticky="true" />  
-                <p:panel id="panel2" header="E-mails cadastrados"  closable="true" style="margin:10px;"> 
-                    <h:panelGrid columns="3" cellpadding="5">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:dataTable var="end" value="#{loginBean.usuario.enderecos}" style="margin-left: 37px;">  
-                                <p:column headerText="Id">  
-                                    <h:outputText value="#{end.id}" />  
-                                </p:column>  
-                                <p:column headerText="Bairro">  
-                                    <h:outputText value="#{end.bairro}" />  
-                                </p:column>  
-                                <p:column headerText="Número">  
-                                    <h:outputText value="#{end.numero}" />  
-                                </p:column>  
-                                <p:column headerText="Complemento">  
-                                    <h:outputText value="#{end.complemento}" />  
-                                </p:column>  
-                                <p:column headerText="Logradouro">  
-                                    <h:outputText value="#{end.logradouro}" />  
-                                </p:column>  
-                                <p:column headerText="Tipo Logradouro">  
-                                    <h:outputText value="#{end.tipoLogradouro}" />  
-                                </p:column>  
-                                <p:column headerText="País">  
-                                    <h:outputText value="#{end.local.pais}" />  
-                                </p:column>  
-                                <p:column headerText="Estado">  
-                                    <h:outputText value="#{end.local.estado}" />  
-                                </p:column>  
-                                <p:column headerText="Cidade">  
-                                    <h:outputText value="#{end.local.cidade}" />  
-                                </p:column>  
-                                <p:column headerText="CEP">  
-                                    <h:outputText value="#{end.cep}" />  
-                                </p:column>                         
-                            </p:dataTable> 
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Logradouro:*" />
+                        <p:inputText value="#{enderecoBean.endereco.logradouro}" />
+                        <h:outputText value="Número" />
+                        <p:inputText value="#{enderecoBean.endereco.numero}" />
+                        <h:outputText value="Complemento:" />
+                        <p:inputText value="#{enderecoBean.endereco.complemento}" />
+                        <h:outputText value="Cep:*" />
+                        <p:inputText value="#{enderecoBean.endereco.cep}" />
+                        <h:outputText value="Bairro:*" />
+                        <p:inputText value="#{enderecoBean.endereco.bairro}" />
+                        <h:outputText value="Cidade:*" />
+                        <p:inputText value="#{enderecoBean.endereco.local.cidade}" size="50" />
+                        <h:outputText value="Estado:*" />
+                        <h:selectOneMenu id="txt3" value="#{enderecoBean.endereco.local.estado}" required="true" label="Text 3">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="PR" itemValue="PR" />
+                            <f:selectItem itemLabel="SP" itemValue="SP" />
+                            <f:selectItem itemLabel="RS" itemValue="RS" />
+                            <f:selectItem itemLabel="RS" itemValue="SC" />
+                        </h:selectOneMenu>
+                        <h:outputText value="Pais:*" />
+                        <h:selectOneMenu id="txt4" value="#{enderecoBean.endereco.local.pais}" required="true" label="Text 4">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="BR" itemValue="PR" />
+                            <f:selectItem itemLabel="PY" itemValue="SP" />
+                        </h:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="Cadastrar"
+                                     actionListener="#{enderecoBean.addEndereco()}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                                 message="Você gostaria de Deletar o #{enderecoBean.endereco.logradouro}?"
+                                 header="Excluir" severity="alert" widgetVar="confirmation">
 
+                    <p:commandButton id="confirm" value="Sim"
+                                     oncomplete="confirmation.hide()"
+                                     actionListener="#{enderecoBean.deleteEndereco()}"
+                                     update=":formPrincipal:tabelaPessoas" />
+                    <p:commandButton id="decline" value="Não"
+                                     onclick="confirmation.hide()" type="button" />
 
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                            <p:commandButton value="Atualizar Telefone" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
-                        </h:panelGrid>
-                    </h:panelGrid>
-                </p:panel>
-
+                </p:confirmDialog>
             </h:form>
         </div>
     </c:if>

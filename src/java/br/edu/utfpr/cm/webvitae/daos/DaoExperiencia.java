@@ -30,4 +30,16 @@ public class DaoExperiencia extends DaoGenerics<Experiencia>  {
         }
         return 0;
     }
+    
+    public void alterar(Experiencia experiencia) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(experiencia);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
+    }
 }

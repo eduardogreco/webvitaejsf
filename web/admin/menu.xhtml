@@ -15,16 +15,17 @@
                     <li class="icn_edit_article">
                         <h:commandLink value="Alterar senha" action="#{pageManager.setPagSenha()}" />
                     </li>
-                     <li class="icn_new_article">
+                    <li class="icn_new_article">
                         <h:commandLink value="Endereço" action="#{pageManager.setPagEndereco()}" />
                     </li>
                     <li class="icn_new_article">
                         <h:commandLink value="Telefone" action="#{pageManager.setPagTelefone()}" />
                     </li>
-                     <li class="icn_new_article">
+                    <li class="icn_new_article">
                         <h:commandLink value="Email" action="#{pageManager.setPagEmail()}" />
                     </li>
                 </ul>
+                  <c:if test="#{loginBean.tipoPessoa != 'admin'}">
                 <h3>Currículo</h3>
                 <ul class="toggle">
                     <li class="icn_new_article">
@@ -40,6 +41,7 @@
                                             <h:commandLink value="Comissões" action="{pageManager.setPagComissoes()}" />
                                         </li>-->
                 </ul>
+                 </c:if>
                 <h3>Vagas disponíveis</h3>
                 <ul class="toggle">
                     <li class="icn_categories">

@@ -17,8 +17,8 @@ public class DaoTelefone extends DaoGenerics<Telefone> {
     public DaoTelefone() {
         super(Telefone.class);
     }
-    
-       public int obterUltimoId() {
+
+    public int obterUltimoId() {
         List<Telefone> lista = null;
 
         Query query = session.createQuery("FROM " + alvo.getSimpleName() + " C WHERE C.id = (select  max(id) from " + alvo.getSimpleName() + ")");
@@ -28,13 +28,25 @@ public class DaoTelefone extends DaoGenerics<Telefone> {
         }
         return 0;
     }
-       
-        public Telefone obterPorIdPessoa(int id) {
+
+    public Telefone obterPorIdPessoa(int id) {
         Telefone objeto = null;
         if (id > 0) {
             Query select = session.createQuery("From " + alvo.getSimpleName() + " where pessoa_id = " + id);
             objeto = (Telefone) select.uniqueResult();
         }
         return objeto;
+    }
+
+    public void alterar(Telefone telefone) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(telefone);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
     }
 }

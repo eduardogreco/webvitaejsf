@@ -7,72 +7,103 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="form">
-                <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panel id="panel" header="Adicionar Formação"  closable="true" style="margin:10px;"> 
-                    <h:panelGrid columns="3" cellpadding="5">
+            <h:form id="formPrincipal">
+                <p:dataTable var="lista" value="#{loginBean.usuario.formacoes}"
+                             id="tabelaPessoas" style="width:70%">
+                    <f:facet name="header">Formações</f:facet>
 
-                        <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{formacaoBean.formacao.id}" readonly="true" label="id" size="10"/>  
-                        <p:message for="id" /> 
+                    <p:column headerText="Id">
 
-                        <h:outputLabel for="curso" value="Curso:*" />
-                        <p:inputText id="curso" value="#{formacaoBean.formacao.curso}" required="true" label="curso" size="50"/>  
-                        <p:message for="curso" /> 
+                        <h:outputText value="#{lista.id}" />
+                    </p:column>
+                    <p:column headerText="Instituição">
 
-                        <h:outputLabel for="insti" value="Instituição:*" />
-                        <p:inputText id="insti" value="#{formacaoBean.formacao.instituicao}" required="true" label="insti" size="50"/>  
-                        <p:message for="insti" /> 
+                        <h:outputText value="#{lista.instituicao}" />
+                    </p:column>
+                    <p:column headerText="Curso">
 
-                        <h:outputLabel for="durac" value="Duração:*" />
-                        <p:inputText id="durac" value="#{formacaoBean.formacao.duracao}" required="true" label="durac" size="10"/>  
-                        <p:message for="durac" /> 
+                        <h:outputText value="#{lista.curso}" />
+                    </p:column>
+                    <p:column headerText="Duração">
 
-                        <h:outputLabel for="conteu" value="Conteúdo:*" />
-                        <p:inputTextarea id="conteu" rows="10" cols="50" completeMethod="#{formacaoBean.formacao.conteudo}" queryDelay="750" minQueryLength="4" />
-                        <p:message for="conteu" /> 
+                        <h:outputText value="#{lista.duracao}" />
+                    </p:column>
+                    <p:column headerText="Conteúdo">
 
-                        <h:panelGrid columns="2" cellpadding="3">  
-                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{formacaoBean.addFormacao()}" update="form:growl" ajax="false"/>
-                        </h:panelGrid> 
-                    </h:panelGrid>
+                        <h:outputText value="#{lista.conteudo}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                       oncomplete="dialogAlterar.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                            <f:setPropertyActionListener target="#{formacaoBean.formacao}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                       oncomplete="confirmation.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                            <f:setPropertyActionListener target="#{formacaoBean.formacao}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                    </p:column>
 
-                </p:panel>
+                </p:dataTable>
 
-                <p:growl id="growl2" showDetail="true" sticky="true" />  
-                <p:panel id="panel2" header="Formação cadastradas"  closable="true" style="margin:10px;"> 
-                    <h:panelGrid columns="3" cellpadding="5">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:dataTable var="forma" value="#{loginBean.usuario.formacoes}" style="margin-left: 37px;">  
-                                <p:column headerText="Id">  
-                                    <h:outputText value="#{forma.id}" />  
-                                </p:column>  
+                <p:commandButton value="Cadastrar" id="cadastrar"
+                                 oncomplete="dialogCadastrar.show()" />
+            </h:form>
+            <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:panelGrid id="panelAlterar" columns="2">
 
-                                <p:column headerText="Curso">  
-                                    <h:outputText value="#{forma.curso}" />  
-                                </p:column>  
+                        <h:outputText value="Instituição" />
+                        <p:inputText value="#{formacaoBean.formacao.instituicao}" required="true" size="50"/>
+                        <h:outputText value="Curso" />
+                        <p:inputText value="#{formacaoBean.formacao.curso}" required="true" size="50"/>
+                        <h:outputText value="Duração" />
+                        <p:inputText value="#{formacaoBean.formacao.duracao}" required="true" size="50" />
+                        <h:outputText value="Conteúdo" />
+                        <p:inputTextarea value="#{formacaoBean.formacao.conteudo}" rows="6" cols="33" />
+                    </p:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{formacaoBean.alterar}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
 
-                                <p:column headerText="Instituição">  
-                                    <h:outputText value="#{forma.instituicao}" />  
-                                </p:column>  
-                                
-                                  <p:column headerText="Duração">  
-                                    <h:outputText value="#{forma.duracao}" />  
-                                </p:column>  
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Instituição" />
+                        <p:inputText value="#{formacaoBean.formacao.instituicao}" required="true" size="50"/>
+                        <h:outputText value="Curso" />
+                        <p:inputText value="#{formacaoBean.formacao.curso}" required="true" size="50"/>
+                        <h:outputText value="Duração" />
+                        <p:inputText value="#{formacaoBean.formacao.duracao}" required="true" size="50" />
+                        <h:outputText value="Conteúdo" />
+                        <p:inputTextarea value="#{formacaoBean.formacao.conteudo}" rows="6" cols="33" />
+                    </p:panelGrid>
+                    <p:commandButton value="Cadastrar"
+                                     actionListener="#{formacaoBean.addFormacao()}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                                 message="Você gostaria de Deletar o #{formacaoBean.formacao.curso}?"
+                                 header="Excluir" severity="alert" widgetVar="confirmation">
 
+                    <p:commandButton id="confirm" value="Sim"
+                                     oncomplete="confirmation.hide()"
+                                     actionListener="#{formacaoBean.deleteFormacao}"
+                                     update=":formPrincipal:tabelaPessoas" />
+                    <p:commandButton id="decline" value="Não"
+                                     onclick="confirmation.hide()" type="button" />
 
-                                <p:column exportable="false" headerText="Alterar" style="width:4%;text-align: center;"> 
-                                    <p:commandButton id="viewButton3" icon="ui-icon-arrowrefresh-1-s" oncomplete="pessoaDelete.show()"/> 
-                                </p:column> 
-
-                                <p:column exportable="false" headerText="Excluir" style="width:4%;text-align: center;"> 
-                                    <p:commandButton id="viewButton2" icon="ui-icon-trash" oncomplete="pessoaDelete.show()"/> 
-                                </p:column> 
-                            </p:dataTable>  
-
-                        </h:panelGrid>
-                    </h:panelGrid>
-                </p:panel>
+                </p:confirmDialog>
             </h:form>
         </div>
     </c:if>

@@ -1,56 +1,53 @@
-
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:uri="http://primefaces.prime.com.tr/ui"
-                xmlns:c="http://java.sun.com/jsp/jstl/core">
+<?xml version='1.0' encoding='UTF-8' ?> 
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
-            <div id="principal">
-                <h:form id="form">  
-                    <p:panel id="panel" header="Vagas em aberto"  closable="true" style="margin:10px;">
-                        <p:growl id="message" showDetail="true"/>  
-                        <p:dataTable var="pessoa"  value="#{listagemVagasBean.vagass}" selection="#{listagemVagasBean.selectedVagas}" editable="true" rowKey="#{pessoa.descricao}" paginator="true" rows="10"  selectionMode="single" id="pessoaTable"
-                                     emptyMessage="Nenhum resultado foi encontrado." filteredValue="#{listagemVagasBean.filteredVagass}" widgetVar="pessoasTable" >  
-                            <p:ajax event="rowSelect" update=":form" /> 
+        <div id="principal">
+            <h:form id="formPrincipal">
+                <p:dataTable var="lista" value="#{listagemVagasBean.vagass}"
+                             id="tabelaPessoas" style="width:70%">
+                    <f:facet name="header">Vagas abertas</f:facet>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{lista.nome}" />
+                    </p:column>
+                    <p:column headerText="Quantidade">
 
-                            <f:facet name="header" >
-                                <p:outputPanel style="margin-left: 60%;">
-                                    <h:outputText value="Pesquisar: "/>
-                                    <p:inputText id="globalFilter" onkeyup="pessoasTable.filter()"/>
-                                </p:outputPanel>
-                            </f:facet>
-                            <p:column headerText="id">  
-                                <h:outputText value="#{pessoa.id}" />  
-                            </p:column>  
+                        <h:outputText value="#{lista.quantidade}" />
+                    </p:column>
+                    <p:column headerText="Requisitos">
 
-                            <p:column headerText="Nome">  
-                                <h:outputText value="#{pessoa.nome}" />  
-                            </p:column>  
+                        <h:outputText value="#{lista.requisitos}" />
+                    </p:column>
+                    <p:column headerText="Setor">
 
-                            <p:column headerText="Descrição">  
-                                <h:outputText value="#{pessoa.descricao}" />   
-                            </p:column> 
-                            
-                             <p:column headerText="Quantidade">  
-                                 <h:outputText value="#{pessoa.quantidade}" />   
-                            </p:column> 
-                            
-                             <p:column headerText="Requisitos">  
-                                 <h:outputText value="#{pessoa.requisitos}" />   
-                            </p:column> 
-                            
-                            <p:column headerText="Setor">  
-                                <h:outputText value="#{pessoa.setor}" />   
-                            </p:column> 
+                        <h:outputText value="#{lista.setor}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                         <p:commandLink title="Candidatar" update=":formAlterar:Alterar"
+                                        oncomplete="dialogAlterar.show()" immediate="true">
+                             <p:graphicImage value="../resources/imagesAdmin/icn_profile.png" />
+                             <f:setPropertyActionListener target="#{listagemVagasBean.selectedVagas}"
+                                                          value="#{lista}" />
+                         </p:commandLink>
+                    </p:column>
 
-                        </p:dataTable>   
-                        <br /> <br />
-                    </p:panel>
-                </h:form> 
-            </div>
+                </p:dataTable>
+
+            </h:form>
+            
+             <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{listagemVagasBean.deleteVagas}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
+        </div>
     </c:if>
 </ui:composition>
-
-

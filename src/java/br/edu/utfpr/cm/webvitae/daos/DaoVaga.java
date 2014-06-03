@@ -18,8 +18,8 @@ public class DaoVaga extends DaoGenerics<Vagas> {
     public DaoVaga() {
         super(Vagas.class);
     }
-    
-      public int obterUltimoId() {
+
+    public int obterUltimoId() {
         List<Vagas> lista = null;
 
         Query query = session.createQuery("FROM " + alvo.getSimpleName() + " C WHERE C.id = (select  max(id) from " + alvo.getSimpleName() + ")");
@@ -28,6 +28,18 @@ public class DaoVaga extends DaoGenerics<Vagas> {
             return lista.get(0).getId().intValue();
         }
         return 0;
+    }
+
+    public void alterar(Vagas vagas) {
+
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(vagas);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+
+        }
     }
 
 }

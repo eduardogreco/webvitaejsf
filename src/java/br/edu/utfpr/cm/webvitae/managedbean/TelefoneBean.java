@@ -8,10 +8,13 @@ package br.edu.utfpr.cm.webvitae.managedbean;
 import br.edu.utfpr.cm.webvitae.daos.DaoPessoa;
 import br.edu.utfpr.cm.webvitae.daos.DaoTelefone;
 import br.edu.utfpr.cm.webvitae.login.LoginBean;
-import static br.edu.utfpr.cm.webvitae.login.LoginBean.usuario;
+import br.edu.utfpr.cm.webvitae.model.Email;
 import br.edu.utfpr.cm.webvitae.model.Pessoa;
 import br.edu.utfpr.cm.webvitae.model.Telefone;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -30,6 +33,7 @@ import org.primefaces.event.FileUploadEvent;
 @RequestScoped
 public class TelefoneBean implements Serializable {
 
+     List telefones = new ArrayList();
     private DaoTelefone daoTelefone = new DaoTelefone();
     private static Telefone telefone;
     public static Pessoa usuario;
@@ -63,15 +67,24 @@ public class TelefoneBean implements Serializable {
         }
     }
 
-    public void deleteTelefone(int id_tel) {
-        telefone = daoTelefone.obterPorId(id_tel);
+     public void deleteTelefone() {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
+            DaoTelefone daoTelefone = new DaoTelefone();
             daoTelefone.remover(telefone);
+            telefones = new DaoTelefone().listar();
+            telefone = new Telefone();
+            context.addMessage(null, new FacesMessage("Sucesso", "Telefone removido com sucesso."));
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Não foi possível remover o usuário."));
             ex.printStackTrace();
         }
+    }
+
+    public void alterar(ActionEvent actionEvent) {
+        daoTelefone.alterar(telefone);
+        telefones = new DaoTelefone().listar();
+        telefone = new Telefone();
     }
 
     public void uploadAction(FileUploadEvent event) {

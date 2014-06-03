@@ -77,7 +77,7 @@ public class HibernateConfiguration {
 
     public static Connection getConnection() {
         Session session = TransactionManager.getCurrentSession();
-        return session.connection();
+        return (Connection) session.beginTransaction();
     }
 
     public static Query rHQLQuery(String hql) {

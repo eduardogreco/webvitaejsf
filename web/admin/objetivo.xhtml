@@ -7,65 +7,86 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="form">
-                <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panel id="panel" header="Adicionar Objetivo"  closable="true" style="margin:10px;"> 
-                    <h:panelGrid columns="3" cellpadding="5">
+            <h:form id="formPrincipal">
+                <p:dataTable var="lista" value="#{loginBean.usuario.objetivos}"
+                             id="tabelaPessoas" style="width:70%">
+                    <f:facet name="header">Objetivos</f:facet>
 
-                        <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{objetivoBean.objetivo.id}" readonly="true" label="id" size="10"/>  
-                        <p:message for="id" /> 
+                    <p:column headerText="Id">
 
-                        <h:outputLabel for="princi" value="Principal:*" />
-                        <p:inputText id="princi" value="#{objetivoBean.objetivo.principal}" required="true" label="princi" size="50"/>  
-                        <p:message for="princi" /> 
+                        <h:outputText value="#{lista.id}" />
+                    </p:column>
+                    <p:column headerText="Principal">
 
-                        <h:outputLabel for="secund" value="Secundário:" />
-                        <p:inputText id="secund" value="#{objetivoBean.objetivo.secundario}" required="false" label="secund" size="50"/>  
-                        <p:message for="secund" /> 
+                        <h:outputText value="#{lista.principal}" />
+                    </p:column>
+                    <p:column headerText="Secundário">
 
-                        <h:panelGrid columns="2" cellpadding="3">  
-                            <p:commandButton value="Adicionar" icon="ui-icon-disk" action="#{objetivoBean.addObjetivo()}" update="form:tabela" ajax="false"/>
-                        </h:panelGrid> 
+                        <h:outputText value="#{lista.secundario}" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                       oncomplete="dialogAlterar.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                            <f:setPropertyActionListener target="#{objetivoBean.objetivo}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                       oncomplete="confirmation.show()" immediate="true">
+                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                            <f:setPropertyActionListener target="#{objetivoBean.objetivo}"
+                                                         value="#{lista}" />
+                        </p:commandLink>
+                    </p:column>
 
-                        <p:panel id="panel2" header="Objetivos cadastrados"  closable="true" style="margin:10px;"> 
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <p:dataTable id="tabela" var="obje" value="#{loginBean.usuario.objetivos}" style="margin-left: 37px;">  
-                                        <p:column headerText="Id">  
-                                            <h:outputText value="#{obje.id}" />  
-                                        </p:column>  
+                </p:dataTable>
 
-                                        <p:column headerText="Principal">  
-                                            <h:outputText value="#{obje.principal}" />  
-                                        </p:column>  
+                <p:commandButton value="Cadastrar" id="cadastrar"
+                                 oncomplete="dialogCadastrar.show()" />
+            </h:form>
+            <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:panelGrid id="panelAlterar" columns="2">
+                        <h:outputText value="Principal" />
+                        <p:inputText value="#{objetivoBean.objetivo.principal}" required="true" size="50" />
+                        <h:outputText value="Secundário" />
+                        <p:inputText value="#{objetivoBean.objetivo.secundario}" required="true" size="50" />
+                    </p:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{objetivoBean.alterar}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
 
-                                        <p:column headerText="Secundário">  
-                                            <h:outputText value="#{obje.secundario}" />  
-                                        </p:column>  
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Principal:*" />
+                        <p:inputText value="#{objetivoBean.objetivo.principal}" required="true" size="50"/>
+                        <h:outputText value="Secundário:*" />
+                        <p:inputText value="#{objetivoBean.objetivo.secundario}" required="true" size="50"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Cadastrar"
+                                     actionListener="#{objetivoBean.addObjetivo()}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                                 message="Você gostaria de Deletar o #{objetivoBean.objetivo.principal}?"
+                                 header="Excluir" severity="alert" widgetVar="confirmation">
 
-                                        <p:column exportable="false" headerText="Alterar" style="width:4%;text-align: center;"> 
-                                            <p:commandButton id="viewButton3" icon="ui-icon-arrowrefresh-1-s" oncomplete="pessoaDelete.show()"/> 
-                                        </p:column> 
+                    <p:commandButton id="confirm" value="Sim"
+                                     oncomplete="confirmation.hide()"
+                                     actionListener="#{objetivoBean.deleteExperiencia()}"
+                                     update=":formPrincipal:tabelaPessoas" />
+                    <p:commandButton id="decline" value="Não"
+                                     onclick="confirmation.hide()" type="button" />
 
-                                        <p:column exportable="false" headerText="Excluir" style="width:4%;text-align: center;"> 
-                                            <p:commandButton id="viewButton2" icon="ui-icon-trash" oncomplete="pessoaDelete.show()"/> 
-                                        </p:column> 
-                                    </p:dataTable>  
-
-                                </h:panelGrid>
-                            </h:panelGrid>
-                        </p:panel> 
-
-
-
-
-
-
-                    </h:panelGrid>
-                </p:panel>
-
-
+                </p:confirmDialog>
             </h:form>
         </div>
     </c:if>
