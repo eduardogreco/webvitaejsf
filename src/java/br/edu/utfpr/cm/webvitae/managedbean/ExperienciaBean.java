@@ -13,7 +13,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javax.annotation.PostConstruct;
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 import javax.faces.application.FacesMessage;
@@ -97,8 +100,13 @@ public class ExperienciaBean implements Serializable {
         experiencia = new Experiencia();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public void deleteExperiencia() {
+=======
+    
+      public void deleteExperiencia() {
+>>>>>>> FETCH_HEAD
 =======
     
       public void deleteExperiencia() {
@@ -116,6 +124,7 @@ public class ExperienciaBean implements Serializable {
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @PostConstruct
     public void init() {
@@ -143,6 +152,8 @@ public class ExperienciaBean implements Serializable {
         return cities;
     }
 
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 }

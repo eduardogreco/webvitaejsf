@@ -26,6 +26,9 @@
                     </p:column>
                     <p:column headerText="Duração">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> FETCH_HEAD
 
                         <h:outputText value="#{lista.duracao}" />
                     </p:column>
@@ -33,6 +36,7 @@
 
                         <h:outputText value="#{lista.atividades}" />
                     </p:column>
+<<<<<<< HEAD
 
 =======
 
@@ -42,6 +46,8 @@
 
                         <h:outputText value="#{lista.atividades}" />
                     </p:column>
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
                     <p:column headerText="Ações">
                         <p:commandLink title="Alterar" update=":formAlterar:Alterar"
@@ -57,6 +63,7 @@
                                                          value="#{lista}" />
                         </p:commandLink>
                     </p:column>
+<<<<<<< HEAD
 
                 </p:dataTable>
 
@@ -142,6 +149,64 @@
                     <p:commandButton id="decline" value="Não"
                                      onclick="confirmation.hide()" type="button" />
 
+=======
+
+                </p:dataTable>
+
+                <p:commandButton value="Cadastrar" id="cadastrar"
+                                 oncomplete="dialogCadastrar.show()" />
+            </h:form>
+            <h:form id="formAlterar">
+                <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
+                          id="Alterar">
+                    <p:panelGrid id="panelAlterar" columns="2">
+                        <h:outputText value="Empresa:" />
+                        <p:inputText value="#{experienciaBean.experiencia.empresa}" required="true" size="50"/>
+                        <h:outputText value="Cargo:" />
+                        <p:inputText value="#{experienciaBean.experiencia.cargo}" required="true" size="50"/>
+                        <h:outputText value="Duração:" />
+                        <p:inputText value="#{experienciaBean.experiencia.duracao}" required="true" size="50"/>
+                        <h:outputText value="Atividades:" />
+                        <p:inputTextarea value="#{experienciaBean.experiencia.atividades}" rows="6" cols="33" />
+                    </p:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{experienciaBean.alterar}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Empresa:" />
+                        <p:inputText value="#{experienciaBean.experiencia.empresa}" required="true" size="50" />
+                        <h:outputText value="Cargo:" />
+                        <p:inputText value="#{experienciaBean.experiencia.cargo}" required="true" size="50" />
+                        <h:outputText value="Duração:" />
+                        <p:inputText value="#{experienciaBean.experiencia.duracao}" required="true" size="50" />
+                        <h:outputText value="Atividades:" />
+                        <p:inputTextarea value="#{experienciaBean.experiencia.atividades}" rows="6" cols="33" />
+                    </p:panelGrid>
+                    <p:commandButton value="Cadastrar"
+                                     actionListener="#{experienciaBean.addExperiencia()}"
+                                     update=":formPrincipal:tabelaPessoas"
+                                     oncomplete="dialogCadastrar.hide()" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formExcluir">
+                <p:confirmDialog id="Excluir"
+                                 message="Você gostaria de Deletar o #{experienciaBean.experiencia.empresa}?"
+                                 header="Excluir" severity="alert" widgetVar="confirmation">
+
+                    <p:commandButton id="confirm" value="Sim"
+                                     oncomplete="confirmation.hide()"
+                                     actionListener="#{experienciaBean.deleteExperiencia}"
+                                     update=":formPrincipal:tabelaPessoas" />
+                    <p:commandButton id="decline" value="Não"
+                                     onclick="confirmation.hide()" type="button" />
+
+>>>>>>> FETCH_HEAD
                 </p:confirmDialog>
             </h:form>
         </div>
