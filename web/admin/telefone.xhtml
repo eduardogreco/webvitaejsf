@@ -49,7 +49,11 @@
                           id="Alterar">
                     <p:panelGrid id="panelAlterar" columns="2">
                         <h:outputText value="Número:" />
+<<<<<<< HEAD
                         <p:inputMask value="#{telefoneBean.telefone.numero}" mask="(99) 9999-99999" />
+=======
+                        <p:inputText value="#{telefoneBean.telefone.numero}" />
+>>>>>>> FETCH_HEAD
                       <h:outputLabel for="txt3" value="Tipo:*" />
                         <h:selectOneMenu id="txt3" value="#{telefoneBean.telefone.tipo}" required="true" label="Text 3">
                             <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
@@ -69,7 +73,11 @@
                 <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
                     <p:panelGrid id="panelCadastrar" columns="2">
                         <h:outputText value="Número:*" />
+<<<<<<< HEAD
                       <p:inputMask value="#{telefoneBean.telefone.numero}" mask="(99) 9999-99999" />
+=======
+                        <p:inputText value="#{telefoneBean.telefone.numero}" />
+>>>>>>> FETCH_HEAD
 
                         <h:outputLabel for="txt3" value="Tipo:*" />
                         <h:selectOneMenu id="txt3" value="#{telefoneBean.telefone.tipo}" required="true" label="Text 3">
@@ -82,7 +90,11 @@
                     </p:panelGrid>
                     <p:commandButton value="Cadastrar"
                                      actionListener="#{telefoneBean.addTelefone()}"
+<<<<<<< HEAD
                                      update=":formPrincipal:tabelaPessoas"
+=======
+                                     update="tabelaPessoas"
+>>>>>>> FETCH_HEAD
                                      oncomplete="dialogCadastrar.hide()" />
                 </p:dialog>
             </h:form>

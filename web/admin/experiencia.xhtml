@@ -25,6 +25,7 @@
                         <h:outputText value="#{lista.cargo}" />
                     </p:column>
                     <p:column headerText="Duração">
+<<<<<<< HEAD
 
                         <h:outputText value="#{lista.duracao}" />
                     </p:column>
@@ -33,6 +34,15 @@
                         <h:outputText value="#{lista.atividades}" />
                     </p:column>
 
+=======
+
+                        <h:outputText value="#{lista.duracao}" />
+                    </p:column>
+                    <p:column headerText="Atividades">
+
+                        <h:outputText value="#{lista.atividades}" />
+                    </p:column>
+>>>>>>> FETCH_HEAD
                     <p:column headerText="Ações">
                         <p:commandLink title="Alterar" update=":formAlterar:Alterar"
                                        oncomplete="dialogAlterar.show()" immediate="true">
@@ -72,6 +82,7 @@
                                      oncomplete="dialogAlterar.hide()" />
                 </p:dialog>
             </h:form>
+<<<<<<< HEAD
 
             <h:form id="formCadastrar">
                 <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
@@ -98,6 +109,20 @@
                             </p:dataList>
                         </p:outputPanel>
                         
+=======
+
+            <h:form id="formCadastrar">
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <p:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="Empresa:" />
+                        <p:inputText value="#{experienciaBean.experiencia.empresa}" required="true" size="50" />
+                        <h:outputText value="Cargo:" />
+                        <p:inputText value="#{experienciaBean.experiencia.cargo}" required="true" size="50" />
+                        <h:outputText value="Duração:" />
+                        <p:inputText value="#{experienciaBean.experiencia.duracao}" required="true" size="50" />
+                        <h:outputText value="Atividades:" />
+                        <p:inputTextarea value="#{experienciaBean.experiencia.atividades}" rows="6" cols="33" />
+>>>>>>> FETCH_HEAD
                     </p:panelGrid>
                     <p:commandButton value="Cadastrar"
                                      actionListener="#{experienciaBean.addExperiencia()}"

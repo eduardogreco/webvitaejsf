@@ -12,7 +12,10 @@ import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import javax.annotation.PostConstruct;
+=======
+>>>>>>> FETCH_HEAD
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -93,8 +96,13 @@ public class ExperienciaBean implements Serializable {
         experiencias = new DaoExperiencia().listar();
         experiencia = new Experiencia();
     }
+<<<<<<< HEAD
 
     public void deleteExperiencia() {
+=======
+    
+      public void deleteExperiencia() {
+>>>>>>> FETCH_HEAD
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             DaoExperiencia daoExperiencia = new DaoExperiencia();
@@ -108,6 +116,7 @@ public class ExperienciaBean implements Serializable {
         }
     }
 
+<<<<<<< HEAD
     @PostConstruct
     public void init() {
         cities = new ArrayList<String>();
@@ -134,4 +143,6 @@ public class ExperienciaBean implements Serializable {
         return cities;
     }
 
+=======
+>>>>>>> FETCH_HEAD
 }
