@@ -53,8 +53,9 @@
                             <h:outputText value="#{cadastroLoginBean.pessoa.dtNascimento}" id="display">
                                 <f:convertDateTime pattern="dd-MM-yyyy" />
                             </h:outputText>
-                            <p:commandButton value="Adicionar" action="#{cadastroLoginBean.addPessoa()}"  icon="ui-icon-disk" oncomplete="dialogCadastrar.hide()"/>                            
-                            <p:commandButton value="limpar" type="reset"  icon="ui-icon-clean" ajax="false"/>                                    
+                            <p:commandButton value="Adicionar" action="#{cadastroLoginBean.addPessoa()}"  icon="ui-icon-disk"/>                            
+                            <p:commandButton value="limpar" type="reset"  icon="ui-icon-clean" />                                    
+                            <p:commandButton value="voltar" icon="ui-icon-back" oncomplete="dialogCadastrar.hide()" />                                    
                     </p:tab>                    
                 </p:dialog>            
             </h:form>

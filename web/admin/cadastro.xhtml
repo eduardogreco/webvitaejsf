@@ -7,46 +7,38 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="form">
+            <h:form id="form">                
                 <p:growl id="growl" showDetail="true" sticky="true" />  
                 <p:panel id="panel" header="Informações do Perfil"  closable="true" style="margin:10px;"> 
                     <h:panelGrid columns="3" cellpadding="5">
 
-                        <h:outputLabel for="id" value="Id:" />
-                        <p:inputText id="id" value="#{loginBean.usuario.id}" readonly="true" label="id" size="10"/>  
-                        <p:message for="id" /> 
-
                         <h:outputLabel for="nome" value="Nome:*" />
-                        <p:inputText id="nome" value="#{loginBean.usuario.nome}" required="true" label="nome" size="50"/>  
+                        <p:inputText id="nome" value="#{loginBean.usuario.nome}" required="true" label="nome" size="30"/>
                         <p:message for="nome" /> 
 
                         <h:outputLabel for="email" value="Email:*" />
-                        <p:inputText id="email" value="#{loginBean.usuario.email}" required="true" label="email" size="30"/>  
+                        <p:inputText id="email" value="#{loginBean.usuario.email}" required="true" label="email" size="30"/>
                         <p:message for="email" /> 
 
-                        <h:outputLabel for="cpf" value="CPF:" />
-                        <p:inputText id="cpf" value="#{loginBean.usuario.cpf}" readonly="true" label="cpf" size="15"/>  
+                        <h:outputText value="CPF: *"/>
+                        <p:inputMask id="cpf" required="true" label="CPF" value="#{loginBean.usuario.cpf}" mask="999.999.999-99" >
+                            <f:validateLength minimum="11" />
+                        </p:inputMask>
                         <p:message for="cpf" /> 
 
-                        <h:outputLabel for="login" value="Login:" />
-                        <p:inputText id="login" value="#{loginBean.usuario.login}" readonly="true" label="login" size="15"/>  
-                        <p:message for="login" /> 
-
-                        <h:outputLabel for="tipo" value="Tipo:" />
-                        <p:inputText id="tipo" value="#{loginBean.usuario.tipo}" readonly="true" label="tipo" size="15"/>  
-                        <p:message for="tipo" /> 
-
-                        <h:outputLabel for="data" value="Data Cadastro:" />
-                        <p:inputText id="data" value="#{loginBean.usuario.dtCadastro}" readonly="true" label="data" size="15"/>  
-                        <p:message for="data" /> 
-
+                        <h:outputLabel for="login" value="Login:" /> 
+                        <p:inputText id="login" value="#{loginBean.usuario.login}" required="true" label="login" size="30"/>
+                        <p:message for="login" />                         
+                        
                         <h:outputLabel for="dataN" value="Data Nascimento:" />
                         <p:inputText id="dataN" value="#{loginBean.usuario.dtNascimento}" readonly="false" label="dataN" size="15"/>  
                         <p:message for="dataN" /> 
                     </h:panelGrid>
-                
-                    <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">
-                        <p:commandButton value="Atualizar dados" update="form:growl" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" ajax="false"  />
+                    <h:outputText value="#{cadastroLoginBean.pessoa.dtNascimento}" id="display">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                    <h:panelGrid style="margin-left: 95px;" columns="2" cellpadding="5">                        
+                        <p:commandButton value="Atualizar dados" update="@all" icon="ui-icon-arrowrefresh-1-s" action="#{loginBean.atualizaPerfil()}" />
                     </h:panelGrid>
                 </p:panel>
             </h:form>

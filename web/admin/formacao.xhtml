@@ -7,55 +7,50 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="formPrincipal">
-                <p:dataTable var="lista" value="#{loginBean.usuario.formacoes}"
-                             id="tabelaPessoas" style="width:70%">
-                    <f:facet name="header">Formações</f:facet>
+        <h:form id="formPrincipal">
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+            <p:panel id="panel" header="Informações do Perfil"  closable="true" style="margin:10px;"> 
+                <h:panelGrid id="grid" columns="3" cellpadding="5">
+                    <p:dataTable var="lista" value="#{loginBean.usuario.formacoes}"
+                                 id="tabelaPessoas" >
+                        <f:facet name="header">Formações</f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{lista.id}" />
+                        </p:column>
+                        <p:column headerText="Instituição">
+                            <h:outputText value="#{lista.instituicao}" />
+                        </p:column>
+                        <p:column headerText="Curso">
+                            <h:outputText value="#{lista.curso}" />
+                        </p:column>
+                        <p:column headerText="Duração">
+                            <h:outputText value="#{lista.duracao}" />
+                        </p:column>
+                        <p:column headerText="Conteúdo">
+                            <h:outputText value="#{lista.conteudo}" />
+                        </p:column>
+                        <p:column headerText="Ações">
+                            <p:commandLink title="Alterar" update="formPrincipal"
+                                           oncomplete="dialogAlterar.show()" immediate="true">
+                                <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                                <f:setPropertyActionListener target="#{formacaoBean.formacao}"
+                                                             value="#{lista}" />
+                            </p:commandLink>
+                            <p:commandLink title="Excluir" update="formPrincipal"
+                                           oncomplete="confirmation.show()" immediate="true">
+                                <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                                <f:setPropertyActionListener target="#{formacaoBean.formacao}"
+                                                             value="#{lista}" />
+                            </p:commandLink>
+                        </p:column>
 
-                    <p:column headerText="Id">
+                    </p:dataTable>
+                </h:panelGrid>
+                <p:commandButton value="Cadastrar" id="cadastrar" oncomplete="dialogCadastrar.show()" />
 
-                        <h:outputText value="#{lista.id}" />
-                    </p:column>
-                    <p:column headerText="Instituição">
-
-                        <h:outputText value="#{lista.instituicao}" />
-                    </p:column>
-                    <p:column headerText="Curso">
-
-                        <h:outputText value="#{lista.curso}" />
-                    </p:column>
-                    <p:column headerText="Duração">
-
-                        <h:outputText value="#{lista.duracao}" />
-                    </p:column>
-                    <p:column headerText="Conteúdo">
-
-                        <h:outputText value="#{lista.conteudo}" />
-                    </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
-                                       oncomplete="dialogAlterar.show()" immediate="true">
-                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
-                            <f:setPropertyActionListener target="#{formacaoBean.formacao}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
-                                       oncomplete="confirmation.show()" immediate="true">
-                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
-                            <f:setPropertyActionListener target="#{formacaoBean.formacao}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                    </p:column>
-
-                </p:dataTable>
-
-                <p:commandButton value="Cadastrar" id="cadastrar"
-                                 oncomplete="dialogCadastrar.show()" />
-            </h:form>
-            <h:form id="formAlterar">
                 <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
                           id="Alterar">
-                    <p:panelGrid id="panelAlterar" columns="2">
+                    <h:panelGrid id="panelAlterar" columns="2">
 
                         <h:outputText value="Instituição" />
                         <p:inputText value="#{formacaoBean.formacao.instituicao}" required="true" size="50"/>
@@ -65,17 +60,15 @@
                         <p:inputText value="#{formacaoBean.formacao.duracao}" required="true" size="50" />
                         <h:outputText value="Conteúdo" />
                         <p:inputTextarea value="#{formacaoBean.formacao.conteudo}" rows="6" cols="33" />
-                    </p:panelGrid>
+                    </h:panelGrid>
                     <p:commandButton value="Alterar"
                                      actionListener="#{formacaoBean.alterar}"
-                                     update=":formPrincipal:tabelaPessoas"
+                                     update="grid"
                                      oncomplete="dialogAlterar.hide()" />
                 </p:dialog>
-            </h:form>
 
-            <h:form id="formCadastrar">
                 <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
-                    <p:panelGrid id="panelCadastrar" columns="2">
+                    <h:panelGrid id="panelCadastrar" columns="2">
                         <h:outputText value="Instituição" />
                         <p:inputText value="#{formacaoBean.formacao.instituicao}" required="true" size="50"/>
                         <h:outputText value="Curso" />
@@ -84,14 +77,13 @@
                         <p:inputText value="#{formacaoBean.formacao.duracao}" required="true" size="50" />
                         <h:outputText value="Conteúdo" />
                         <p:inputTextarea value="#{formacaoBean.formacao.conteudo}" rows="6" cols="33" />
-                    </p:panelGrid>
+                    </h:panelGrid>
                     <p:commandButton value="Cadastrar"
                                      actionListener="#{formacaoBean.addFormacao()}"
-                                     update=":formPrincipal:tabelaPessoas"
+                                     update="grid"
                                      oncomplete="dialogCadastrar.hide()" />
                 </p:dialog>
-            </h:form>
-            <h:form id="formExcluir">
+
                 <p:confirmDialog id="Excluir"
                                  message="Você gostaria de Deletar o #{formacaoBean.formacao.curso}?"
                                  header="Excluir" severity="alert" widgetVar="confirmation">
@@ -99,12 +91,13 @@
                     <p:commandButton id="confirm" value="Sim"
                                      oncomplete="confirmation.hide()"
                                      actionListener="#{formacaoBean.deleteFormacao}"
-                                     update=":formPrincipal:tabelaPessoas" />
+                                     update="grid" />
                     <p:commandButton id="decline" value="Não"
                                      onclick="confirmation.hide()" type="button" />
 
                 </p:confirmDialog>
-            </h:form>
-        </div>
+            </p:panel>
+        </h:form>
+       </div>
     </c:if>
 </ui:composition>

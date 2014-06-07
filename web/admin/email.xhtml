@@ -7,68 +7,49 @@
                  xmlns:f="http://java.sun.com/jsf/core">
     <c:if test="#{loginBean.loggedIn}">
         <div id="principal">
-            <h:form id="formPrincipal">
-                <p:dataTable var="lista" value="#{loginBean.usuario.emails}"
-                             id="tabelaPessoas" style="width:70%">
-                    <f:facet name="header">E-mails</f:facet>
+        <h:form id="formPrincipal">
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+            <p:panel id="panel" header="Informações do Perfil"  closable="true" style="margin:8px;"> 
+                <h:panelGrid id="grid" columns="3" cellpadding="5">
+                    <p:dataTable var="lista" value="#{loginBean.usuario.emails}"
+                                 id="tabelaPessoas" >
+                        <f:facet name="header">E-mails</f:facet>
 
-                    <p:column headerText="Id">
+                        <p:column headerText="Id">
 
-                        <h:outputText value="#{lista.id}" />
-                    </p:column>
-                    <p:column headerText="E-mail">
+                            <h:outputText value="#{lista.id}" />
+                        </p:column>
+                        <p:column headerText="E-mail">
 
-                        <h:outputText value="#{lista.email}" />
-                    </p:column>
-                    <p:column headerText="Tipo">
+                            <h:outputText value="#{lista.email}" />
+                        </p:column>
+                        <p:column headerText="Tipo">
 
-                        <h:outputText value="#{lista.tipo}" />
-                    </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandLink title="Alterar" update=":formAlterar:Alterar"
-                                       oncomplete="dialogAlterar.show()" immediate="true">
-                            <p:graphicImage value="../resources/imagesAdmin/update.png" />
-                            <f:setPropertyActionListener target="#{emailBean.email}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                        <p:commandLink title="Excluir" update=":formExcluir:Excluir"
-                                       oncomplete="confirmation.show()" immediate="true">
-                            <p:graphicImage value="../resources/imagesAdmin/delete.png" />
-                            <f:setPropertyActionListener target="#{emailBean.email}"
-                                                         value="#{lista}" />
-                        </p:commandLink>
-                    </p:column>
+                            <h:outputText value="#{lista.tipo}" />
+                        </p:column>
+                        <p:column headerText="Ações">
+                            <p:commandLink title="Alterar" 
+                                           oncomplete="dialogAlterar.show()" immediate="true">
+                                <p:graphicImage value="../resources/imagesAdmin/update.png" />
+                                <f:setPropertyActionListener target="#{emailBean.email}"
+                                                             value="#{lista}" />
+                            </p:commandLink>
+                            <p:commandLink title="Excluir" 
+                                           oncomplete="confirmation.show()" immediate="true">
+                                <p:graphicImage value="../resources/imagesAdmin/delete.png" />
+                                <f:setPropertyActionListener target="#{emailBean.email}"
+                                                             value="#{lista}" />
+                            </p:commandLink>
+                        </p:column>
 
-                </p:dataTable>
-
+                    </p:dataTable>
+                </h:panelGrid>
                 <p:commandButton value="Cadastrar" id="cadastrar"
                                  oncomplete="dialogCadastrar.show()" />
-            </h:form>
-            <h:form id="formAlterar">
+
                 <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true"
                           id="Alterar">
-                    <p:panelGrid id="panelAlterar" columns="2">
-                     <h:outputText value="E-mail:*" />
-                        <p:inputText value="#{emailBean.email.email}" />
-
-                        <h:outputLabel for="txt3" value="Tipo:*" />
-                        <h:selectOneMenu id="txt3" value="#{emailBean.email.tipo}" required="true" label="Text 3">
-                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
-                            <f:selectItem itemLabel="PARTICULAR" itemValue="PARTICULAR" />
-                            <f:selectItem itemLabel="CONTATO" itemValue="CONTATO" />
-                            <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
-                        </h:selectOneMenu>
-                    </p:panelGrid>
-                    <p:commandButton value="Alterar"
-                                     actionListener="#{emailBean.alterar}"
-                                     update=":formPrincipal:tabelaPessoas"
-                                     oncomplete="dialogAlterar.hide()" />
-                </p:dialog>
-            </h:form>
-
-            <h:form id="formCadastrar">
-                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
-                    <p:panelGrid id="panelCadastrar" columns="2">
+                    <h:panelGrid id="panelAlterar" columns="2">
                         <h:outputText value="E-mail:*" />
                         <p:inputText value="#{emailBean.email.email}" />
 
@@ -79,15 +60,33 @@
                             <f:selectItem itemLabel="CONTATO" itemValue="CONTATO" />
                             <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
                         </h:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton value="Alterar"
+                                     actionListener="#{emailBean.alterar}"
+                                     update="grid"
+                                     oncomplete="dialogAlterar.hide()" />
+                </p:dialog>
 
-                    </p:panelGrid>
+                <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                    <h:panelGrid id="panelCadastrar" columns="2">
+                        <h:outputText value="E-mail:*" />
+                        <p:inputText value="#{emailBean.email.email}" />
+
+                        <h:outputLabel for="txt4" value="Tipo:*" />
+                        <h:selectOneMenu id="txt4" value="#{emailBean.email.tipo}" required="true" label="Text 4">
+                            <f:selectItem itemLabel="Selecionar..." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="PARTICULAR" itemValue="PARTICULAR" />
+                            <f:selectItem itemLabel="CONTATO" itemValue="CONTATO" />
+                            <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+                        </h:selectOneMenu>
+
+                    </h:panelGrid>
                     <p:commandButton value="Cadastrar"
                                      actionListener="#{emailBean.addEmail()}"
-                                     update=":formPrincipal:tabelaPessoas"
+                                     update="grid"
                                      oncomplete="dialogCadastrar.hide()" />
                 </p:dialog>
-            </h:form>
-            <h:form id="formExcluir">
+
                 <p:confirmDialog id="Excluir"
                                  message="Você gostaria de Deletar o #{emailBean.email.email}?"
                                  header="Excluir" severity="alert" widgetVar="confirmation">
@@ -95,12 +94,13 @@
                     <p:commandButton id="confirm" value="Sim"
                                      oncomplete="confirmation.hide()"
                                      actionListener="#{emailBean.deleteEmail}"
-                                     update=":formPrincipal:tabelaPessoas" />
+                                     update="grid" />
                     <p:commandButton id="decline" value="Não"
                                      onclick="confirmation.hide()" type="button" />
 
                 </p:confirmDialog>
-            </h:form>
+            </p:panel>
+        </h:form>
         </div>
     </c:if>
 </ui:composition>
